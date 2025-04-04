@@ -10,7 +10,7 @@
   --danger: #dc2626;
   --radius: 12px;
   --shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-  --font: 'Segoe UI', 'Inter', sans-serif;
+  --font: 'Inter', sans-serif;
 }
 
 * {
@@ -35,8 +35,7 @@ body {
   padding: 40px 20px;
 }
 
-/* FORM SECTION */
-.section {
+.promo-section {
   flex: 1 1 480px;
   background: var(--surface);
   border-radius: var(--radius);
@@ -44,16 +43,76 @@ body {
   box-shadow: var(--shadow);
 }
 
-h1 {
+.promo-section h1 {
   font-size: 28px;
   margin-bottom: 16px;
   color: var(--primary);
 }
 
-label {
+.promo-section .description {
+  font-size: 16px;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+.promo-btn {
+  display: inline-block;
+  padding: 12px 20px;
+  font-weight: 600;
+  background: var(--secondary);
+  color: white;
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.promo-btn:hover {
+  background: var(--secondary-hover);
+}
+
+.trusted-doctors {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.trusted-doctors img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: var(--shadow);
+}
+
+.trusted-doctors .promo-text {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.form-section {
+  flex: 1 1 480px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 40px;
+  box-shadow: var(--shadow);
+}
+
+.form-section h2 {
+  font-size: 24px;
+  margin-bottom: 24px;
+  color: var(--primary);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
   display: block;
   font-weight: 600;
-  margin-top: 16px;
+  margin-bottom: 6px;
   font-size: 15px;
 }
 
@@ -65,7 +124,6 @@ input, select {
   border-radius: var(--radius);
   background-color: #f8fafc;
   transition: border 0.3s ease;
-  margin-top: 6px;
 }
 
 input:focus, select:focus {
@@ -84,7 +142,6 @@ button {
   border: none;
   border-radius: var(--radius);
   cursor: pointer;
-  margin-top: 20px;
   transition: background-color 0.3s ease;
 }
 
@@ -92,13 +149,27 @@ button:hover {
   background-color: var(--primary-hover);
 }
 
-.totale {
+.results {
   margin-top: 30px;
   padding: 24px;
   background-color: #f0fdf4;
   border: 1px solid #ccfbf1;
   border-radius: var(--radius);
+}
+
+.result-group {
+  margin-bottom: 20px;
+}
+
+.result-group label {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.result-group span {
+  display: block;
   font-size: 18px;
+  font-weight: 600;
   color: var(--text);
 }
 
@@ -108,7 +179,8 @@ button:hover {
     gap: 20px;
   }
 
-  .section {
+  .promo-section,
+  .form-section {
     padding: 30px 20px;
   }
-} 
+}
