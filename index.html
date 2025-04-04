@@ -3,87 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Preventivo GIPO</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 20px; max-width: 800px; }
-    h1 { color: #2c3e50; }
-    label, select, input { margin-top: 10px; display: block; }
-    .section { margin-top: 30px; padding: 20px; border: 1px solid #ccc; border-radius: 10px; }
-    .totale { font-size: 1.2em; margin-top: 20px; font-weight: bold; }
-  </style>
+  <title>Preventivo GIPO | MioDottore</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Preventivo GIPO</h1>
+  <main class="layout">
 
-  <div class="section">
-    <label for="stanze">Numero stanze:</label>
-    <input type="number" id="stanze" value="5" min="1">
+    <!-- Sezione Promozionale -->
+    <section class="promo-section">
+      <h1>Il gestionale su misura<br>per la tua struttura sanitaria</h1>
+      <p class="description">
+        GIPO è il software pensato per semplificare la gestione della tua clinica, migliorare l’efficienza e offrire un’esperienza moderna ai tuoi pazienti.
+      </p>
+      <a class="promo-btn" href="#form">Chiedici come funziona</a>
 
-    <label for="medici">Numero medici:</label>
-    <input type="number" id="medici" value="5" min="1">
+      <div class="trusted-doctors">
+        <img src="https://noa.ai/hs-fs/hubfs/Untitled%20design%20(5)-Aug-13-2024-07-43-56-5647-AM.png" alt="Dottore 1" />
+        <img src="https://noa.ai/hs-fs/hubfs/Untitled%20design%20(10)-Aug-14-2024-11-55-26-2415-AM.png" alt="Dottore 2" />
+        <img src="https://noa.ai/hs-fs/hubfs/Untitled%20design%20(11)-Aug-14-2024-12-01-04-3391-PM.png" alt="Dottore 3" />
+        <div class="promo-text">
+          <p>In collaborazione con MioDottore</p>
+          <p><strong>+40.000 professionisti sanitari</strong></p>
+        </div>
+      </div>
+    </section>
 
-    <label for="bundle">Seleziona bundle:</label>
-    <select id="bundle">
-      <option value="starter">GIPO Starter</option>
-      <option value="plus">GIPO Plus</option>
-      <option value="vip">GIPO VIP</option>
-    </select>
+    <!-- Sezione Form -->
+    <section class="form-section" id="form">
+      <h2>Calcola il canone per la struttura</h2>
+      <form>
+        <div class="form-group">
+          <label for="stanze">Numero Ambulatori (stanze)</label>
+          <input type="number" id="stanze" value="5" min="1" required>
+        </div>
 
-    <label><input type="checkbox" id="crm"> Includi CRM MioDottore</label>
+        <div class="form-group">
+          <label for="medici">Numero Medici</label>
+          <input type="number" id="medici" value="5" min="1" required>
+        </div>
 
-    <label><input type="checkbox" id="moduloECR"> Modulo ECR (+70€/mese)</label>
-    <label><input type="checkbox" id="moduloSmartQ"> Modulo SmartQ (+90€/mese + 299€ setup)</label>
-  </div>
+        <div class="form-group">
+          <label for="bundle">Seleziona il pacchetto</label>
+          <select id="bundle" required>
+            <option value="starter">GIPO Starter</option>
+            <option value="plus">GIPO Plus</option>
+            <option value="vip">GIPO VIP</option>
+          </select>
+        </div>
 
-  <button onclick="calcolaPreventivo()">Calcola Preventivo</button>
+        <div class="form-group">
+          <label><input type="checkbox" id="crm"> Includi CRM MioDottore</label>
+        </div>
 
-  <div id="risultato" class="totale"></div>
+        <div class="form-group">
+          <label><input type="checkbox" id="moduloECR"> Modulo ECR (+70€/mese)</label>
+        </div>
 
-  <script>
-    const prezzi = {
-      starter:  { solo: [109, 99, 89, 69, 59, 49, 29, 19], crm: [119, 109, 99, 79, 69, 59, 39, 29] },
-      plus:     { solo: [129, 119, 109, 89, 69, 59, 49, 39], crm: [139, 129, 119, 99, 79, 69, 59, 49] },
-      vip:      { solo: [139, 129, 119, 99, 79, 69, 59, 49], crm: [149, 139, 129, 109, 89, 79, 69, 59] },
-    };
-    const setup =     [99, 119, 129, 149, 199, 299, 499, 899];
-    const soglie =    [1, 2, 4, 6, 8, 10, 15, 20];
+        <div class="form-group">
+          <label><input type="checkbox" id="moduloSmartQ"> Modulo SmartQ (+90€/mese + 299€ setup)</label>
+        </div>
 
-    function getIndiceStanze(stanze) {
-      for (let i = 0; i < soglie.length; i++) {
-        if (stanze <= soglie[i]) return i;
-      }
-      return soglie.length - 1;
-    }
+        <button type="button" onclick="calcolaPreventivo()">Calcola Preventivo</button>
+      </form>
 
-    function calcolaPreventivo() {
-      const stanze = parseInt(document.getElementById("stanze").value);
-      const medici = parseInt(document.getElementById("medici").value);
-      const bundle = document.getElementById("bundle").value;
-      const crm = document.getElementById("crm").checked;
-      const ecr = document.getElementById("moduloECR").checked;
-      const smartq = document.getElementById("moduloSmartQ").checked;
-
-      const idx = getIndiceStanze(stanze);
-      let prezzoUnitario = prezzi[bundle][crm ? "crm" : "solo"][idx];
-
-      // Sconto se rapporto medici/stanze <= 1.3
-      if (medici / stanze <= 1.3) {
-        prezzoUnitario /= 1.5;
-      }
-
-      const canoneMensileBase = prezzoUnitario * stanze;
-      const setupFee = setup[idx];
-
-      const moduliMensili = (ecr ? 70 : 0) + (smartq ? 90 : 0);
-      const moduliSetup = smartq ? 299 : 0;
-
-      const totaleMensile = canoneMensileBase + moduliMensili;
-      const totaleSetup = setupFee + moduliSetup;
-
-      document.getElementById("risultato").innerHTML =
-        `Canone mensile: <strong>€${totaleMensile.toFixed(2)}</strong><br>` +
-        `Setup una tantum: <strong>€${totaleSetup.toFixed(2)}</strong>`;
-    }
-  </script>
+      <div id="risultato" class="results" style="display:none;">
+        <div class="result-group">
+          <label>Canone Mensile Totale</label>
+          <span id="canone-mensile">0 €</span>
+        </div>
+        <div class="result-group">
+          <label>Setup Una Tantum</label>
+          <span id="setup-una-tantum">0 €</span>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="scripts.js"></script>
 </body>
 </html>
