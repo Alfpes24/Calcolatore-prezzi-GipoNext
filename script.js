@@ -23,32 +23,43 @@ function getIndiceStanze(stanze) {
   return soglie.length - 1;
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("calculate-btn").addEventListener("click", calcolaPreventivo);
+});
+
 function calcolaPreventivo() {
-  const stanze = parseInt(document.getElementById("stanze").value);
-  const medici = parseInt(document.getElementById("medici").value);
-  const bundle = document.getElementById("bundle").value;
-  const crm = document.getElementById("crm").checked;
-  const ecr = document.getElementById("moduloECR").checked;
-  const smartq = document.getElementById("moduloSmartQ").checked;
+  const stanze = parseInt(document.getElementById("rooms").value);
+  const medici = parseInt(document.getElementById("doctors").value);
+  const bundle = document.getElementById("bundle")?.value || "plus"; // default: plus
+  const crm = document.getElementById("crm")?.checked || false;
+  const ecr = document.getElementById("moduloECR")?.checked || false;
+  const smartq = document.getElementById("moduloSmartQ")?.checked || false;
+
+  if (isNaN(stanze) || isNaN(medici) || stanze <= 0) {
+    alert("Inserisci un numero valido di ambulatori e medici.");
+    return;
+  }
 
   const idx = getIndiceStanze(stanze);
   let prezzoUnitario = prezzi[bundle][crm ? "crm" : "solo"][idx];
 
   // Sconto se rapporto medici/stanze <= 1.3
-  if ((medici / stanze) <= 1.3) {
+  const rapporto = medici / stanze;
+  if (rapporto <= 1.3) {
     prezzoUnitario = prezzoUnitario / 1.5;
   }
 
   const canoneMensileBase = prezzoUnitario * stanze;
-  const setupFee = setup[idx];
+  const setupFeeBase = setup[idx];
 
   const moduliMensili = (ecr ? 70 : 0) + (smartq ? 90 : 0);
   const moduliSetup = smartq ? 299 : 0;
 
-  const totaleMensile = canoneMensileBase + moduliMensili;
-  const totaleSetup = setupFee + moduliSetup;
+  const canoneTotaleMensile = canoneMensileBase + moduliMensili;
+  const setupTotale = setupFeeBase + moduliSetup;
 
-  document.getElementById("risultato").innerHTML =
-    `Canone mensile: <strong>€${totaleMensile.toFixed(2)}</strong><br>` +
-    `Setup una tantum: <strong>€${totaleSetup.toFixed(2)}</strong>`;
+  // Output nei campi HTML
+  document.getElementById("default-monthly-price").textContent = `${canoneTotaleMensile.toFixed(2)} €`;
+  document.getElementById("setup-fee").textContent = `${setupTotale.toFixed(2)} €`;
+  document.getElementById("results").style.display = "block";
 }
