@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Preventivatore GipoNext</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offerta GipoNext | MioDottore</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Blocco accesso diretto -->
   <script>
     const refOk = document.referrer.includes("alfpes24.github.io") || window.opener;
     const accesso = localStorage.getItem("accesso_consentito") === "ok";
@@ -16,97 +18,88 @@
   </script>
 </head>
 <body>
-  <main class="container">
+  <div class="container">
+
+    <!-- INTESTAZIONE -->
     <header class="header">
-      <h1>Preventivo personalizzato per GipoNext</h1>
-      <p>Configura la tua struttura e scopri l'offerta riservata per oggi.</p>
+      <h1>La soluzione su misura per la tua struttura</h1>
+      <div class="card info-box">
+        <p><strong>Tipo struttura:</strong> Poliambulatorio</p>
+        <p><strong>Numero medici:</strong> 5</p>
+        <p><strong>Servizi selezionati:</strong> Agenda, CRM, Visibilità su Google</p>
+      </div>
     </header>
 
-    <section class="form-section">
-      <form id="calculator-form">
-        <div class="form-group">
-          <label for="rooms">N° Ambulatori</label>
-          <input type="number" id="rooms" min="1" required>
-        </div>
-        <div class="form-group">
-          <label for="doctors">N° Dottori</label>
-          <input type="number" id="doctors" min="1" required>
-        </div>
-        <div class="form-group">
-          <label for="bundle">Versione GIPO</label>
-          <select id="bundle">
-            <option value="starter">Starter</option>
-            <option value="plus" selected>Plus</option>
-            <option value="vip">VIP</option>
-          </select>
-        </div>
-        <div class="form-group checkbox">
-          <input type="checkbox" id="crm">
-          <label for="crm">Includi CRM MioDottore</label>
-        </div>
-        <div class="form-group checkbox">
-          <input type="checkbox" id="tabletFirma">
-          <label for="tabletFirma">Tablet Firma Digitale (+429€)</label>
-        </div>
-        <div class="form-group checkbox">
-          <input type="checkbox" id="lettoreTessera">
-          <label for="lettoreTessera">Lettore Tessera Sanitaria (+79€)</label>
-        </div>
-        <button type="button" id="calculate-btn" class="btn-primary">Calcola</button>
-      </form>
+    <!-- PREZZO A LISTINO -->
+    <section class="card">
+      <div class="price-row">
+        <span>Totale mensile</span>
+        <strong id="monthly-list-price">189 €</strong>
+      </div>
+      <div class="price-row">
+        <span>Setup una tantum</span>
+        <strong id="setup-list-price">590 €</strong>
+      </div>
+      <button class="btn-primary" id="calculate-btn">Procedi con questa configurazione</button>
     </section>
 
-    <section id="results" class="results hidden">
-      <div class="card">
-        <h2>Prezzo a listino</h2>
-        <div class="price-row">
-          <span>Canone Mensile</span>
-          <strong id="monthly-list-price">0 €</strong>
-        </div>
-        <div class="price-row">
-          <span>Setup Fee</span>
-          <strong id="setup-list-price">0 €</strong>
-        </div>
-        <div class="price-row">
-          <span>Totale costi una tantum</span>
-          <strong id="setup-total">0 €</strong>
-        </div>
-        <button id="check-btn" class="btn-outline">Verifica condizioni riservate</button>
-        <div id="loading-spinner" class="spinner-wrapper hidden">
-          <div class="spinner"></div>
-          <p id="countdown">Attendere 15 secondi...</p>
-        </div>
-      </div>
+    <!-- CHECK PROMO -->
+    <section class="card promo-check">
+      <p><strong>Capisco. Mi faccia controllare se ci sono promozioni!</strong></p>
+      <button class="btn-outline" id="check-btn">Verifica condizioni riservate per la tua struttura</button>
     </section>
 
-    <section id="dettaglio-panel" class="promo hidden">
-      <div class="card promo-card">
-        <h2>Offerta Riservata Trovata</h2>
-        <p class="promo-info">Valida solo per oggi. Bloccala ora.</p>
-        <div class="price-row crossed">
-          <span>Canone Mensile a Listino</span>
-          <strong id="monthly-list-price">0 €</strong>
-        </div>
-        <div class="price-row">
-          <span>Nuovo Canone Mensile</span>
-          <strong id="default-monthly-price">0 €</strong>
-        </div>
-        <div class="price-row crossed">
-          <span>Setup Fee a Listino</span>
-          <strong id="setup-list-price">0 €</strong>
-        </div>
-        <div class="price-row">
-          <span>Nuovo Setup Fee</span>
-          <strong id="setup-fee">0 €</strong>
-        </div>
-        <div class="price-row">
-          <span>Totale costi una tantum</span>
-          <strong id="setup-total-promo">0 €</strong>
-        </div>
-        <a href="https://apps.docusign.com/send/templates?view=shared" class="btn-primary" target="_blank">Firma con DocuSign</a>
-      </div>
+    <!-- VERIFICA IN CORSO -->
+    <section class="card hidden" id="loading-spinner">
+      <h2>Sto verificando<br />se ci sono condizioni riservate...</h2>
+      <div class="line-ecg"></div>
+      <div class="badge">Offerta trovata</div>
+      <p class="verifica-msg">
+        <span class="loader-icon">🔄</span>
+        Verifica condizioni riservate per la tua struttura
+      </p>
     </section>
-  </main>
-  <script src="script.js"></script>
+
+    <!-- OFFERTA RISERVATA -->
+    <section class="card promo hidden" id="dettaglio-panel">
+      <h2 class="highlight">Ottime notizie!</h2>
+      <p class="subtitle">
+        Per la sua configurazione è disponibile un’offerta riservata.<br />
+        <small>Condizione disponibile solo per la giornata odierna e limitata ad alcune strutture simili.</small>
+      </p>
+
+      <div class="price-row">
+        <span>Canone mensile</span>
+        <div>
+          <strong id="default-monthly-price" class="promo-price">159 €</strong>
+          <span class="crossed">189 €</span>
+        </div>
+      </div>
+
+      <div class="price-row">
+        <span>Setup una tantum</span>
+        <div>
+          <strong id="setup-fee" class="promo-price">290 €</strong>
+          <span class="crossed">590 €</span>
+        </div>
+      </div>
+
+      <div class="price-row">
+        <span>Bonus aggiuntivo</span>
+        <strong class="bonus">1 mese omaggio + supporto marketing</strong>
+      </div>
+
+      <div class="price-row">
+        <span>⏱️ Valida ancora per</span>
+        <strong class="timer">2 h 38 min</strong>
+      </div>
+
+      <a href="https://apps.docusign.com/send/templates?view=shared" target="_blank" class="btn-primary full">
+        Blocca ora e firma il contratto con DocuSign
+      </a>
+    </section>
+  </div>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
