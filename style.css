@@ -7,7 +7,6 @@
   --surface: #ffffff;
   --text: #1f2937;
   --muted: #6b7280;
-  --danger: #dc2626;
   --radius: 12px;
   --shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
   --font: 'Inter', sans-serif;
@@ -176,6 +175,56 @@ button:hover {
   color: var(--text);
 }
 
+/* BUTTONS */
+.check-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.btn-procedi {
+  padding: 10px 20px;
+  background-color: var(--secondary);
+  color: white;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-procedi:hover {
+  background-color: var(--secondary-hover);
+}
+
+.btn-check {
+  padding: 10px 20px;
+  background-color: #e2e8f0;
+  color: #1f2937;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-check:hover {
+  background-color: #cbd5e1;
+}
+
+/* SPINNER */
+.spinner {
+  width: 30px;
+  height: 30px;
+  border: 4px solid #e5e7eb;
+  border-top: 4px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
   .layout {
@@ -187,37 +236,9 @@ button:hover {
   .form-section {
     padding: 30px 20px;
   }
-}
-.check-buttons {
-  display: flex;
-  gap: 12px;
-  margin-top: 20px;
-}
 
-.btn-check {
-  padding: 10px 20px;
-  background-color: #e2e8f0;
-  border: none;
-  color: var(--text);
-  font-weight: 600;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.btn-check:hover {
-  background-color: #cbd5e1;
-}
-
-.btn-procedi {
-  padding: 10px 20px;
-  background-color: var(--secondary);
-  color: white;
-  font-weight: 600;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background 0.3s ease;
-}
-
-.btn-procedi:hover {
-  background-color: var(--secondary-hover);
+  .check-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
