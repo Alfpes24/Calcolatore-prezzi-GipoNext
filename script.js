@@ -1,4 +1,4 @@
-// Variabili globali per memorizzare costi
+// Variabili globali per salvare i dati tra "Calcola" e "Check"
 let canoneMensileBase = 0;
 let setupFeeBase = 0;
 let tabletCosto = 0;
@@ -22,6 +22,7 @@ const prezzi = {
 const setup = [99, 119, 129, 149, 199, 299, 499, 899];
 const soglie = [1, 2, 4, 6, 8, 10, 15, 20];
 
+// Trova l’indice corretto in base al numero di stanze
 function getIndiceStanze(stanze) {
   for (let i = 0; i < soglie.length; i++) {
     if (stanze <= soglie[i]) return i;
@@ -29,6 +30,7 @@ function getIndiceStanze(stanze) {
   return soglie.length - 1;
 }
 
+// Avvia tutto al caricamento pagina
 document.addEventListener("DOMContentLoaded", function () {
   const calculateBtn = document.getElementById("calculate-btn");
   const checkBtn = document.getElementById("check-btn");
@@ -39,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
   calculateBtn.addEventListener("click", calcolaPreventivo);
 
   checkBtn.addEventListener("click", () => {
+    // Avvia countdown
     spinner.style.display = "block";
     countdown.textContent = "Attendere 15 secondi...";
     dettaglioPanel.style.display = "none";
@@ -54,19 +57,19 @@ document.addEventListener("DOMContentLoaded", function () {
         dettaglioPanel.style.display = "block";
 
         // Calcolo PROMO
-        const canonePromo = canoneMensileBase;
-        const setupPromo = setupFeeBase;
-        const totalePromo = setupPromo + tabletCosto + lettoreCosto;
+        const setupFeePromo = setupFeeBase;
+        const totaleUnaTantumPromo = setupFeePromo + tabletCosto + lettoreCosto;
 
-        document.getElementById("default-monthly-price").textContent = `${canonePromo.toFixed(2)} €`;
-        document.getElementById("setup-fee").textContent = `${setupPromo.toFixed(2)} €`;
-        document.getElementById("setup-total-promo").textContent = `${totalePromo.toFixed(2)} €`;
+        document.getElementById("default-monthly-price").textContent = `${canoneMensileBase.toFixed(2)} €`;
+        document.getElementById("setup-fee").textContent = `${setupFeePromo.toFixed(2)} €`;
+        document.getElementById("setup-total-promo").textContent = `${totaleUnaTantumPromo.toFixed(2)} €`;
       }
     }, 1000);
   });
 });
 
 function calcolaPreventivo() {
+  // Prendo input dal form
   const stanze = parseInt(document.getElementById("rooms").value);
   const medici = parseInt(document.getElementById("doctors").value);
   const bundle = document.getElementById("bundle").value || "plus";
@@ -79,28 +82,32 @@ function calcolaPreventivo() {
     return;
   }
 
+  // Calcolo indice fascia prezzo
   const idx = getIndiceStanze(stanze);
   let prezzoUnitario = prezzi[bundle][crm ? "crm" : "solo"][idx];
 
+  // Applico sconto se rapporto medici/stanze ≤ 1.3
   if ((medici / stanze) <= 1.3) {
     prezzoUnitario = prezzoUnitario / 1.5;
   }
 
-  // Memorizza costi base
+  // Salvo i valori di base globali
   canoneMensileBase = prezzoUnitario * stanze;
   setupFeeBase = setup[idx];
   tabletCosto = tablet ? 429 : 0;
   lettoreCosto = lettore ? 79 : 0;
 
-  const setupTotale = setupFeeBase + tabletCosto + lettoreCosto;
-  const listinoMensile = canoneMensileBase * 1.25;
-  const listinoSetup = setupFeeBase * 1.25;
+  // Calcolo a listino (+25%)
+  const canoneListino = canoneMensileBase * 1.25;
+  const setupListino = setupFeeBase * 1.25;
+  const totaleListinoUnaTantum = setupListino + tabletCosto + lettoreCosto;
 
-  // Popola i campi nel DOM
-  document.getElementById("monthly-list-price").textContent = `${listinoMensile.toFixed(2)} €`;
-  document.getElementById("setup-list-price").textContent = `${listinoSetup.toFixed(2)} €`;
-  document.getElementById("setup-total").textContent = `${setupTotale.toFixed(2)} €`;
+  // Mostro nel DOM
+  document.getElementById("monthly-list-price").textContent = `${canoneListino.toFixed(2)} €`;
+  document.getElementById("setup-list-price").textContent = `${setupListino.toFixed(2)} €`;
+  document.getElementById("setup-total").textContent = `${totaleListinoUnaTantum.toFixed(2)} €`;
 
+  // Reset UI
   document.getElementById("results").style.display = "block";
   document.getElementById("listino-panel").style.display = "block";
   document.getElementById("dettaglio-panel").style.display = "none";
