@@ -1,9 +1,10 @@
-
+// === Variabili globali ===
 let canoneMensileBase = 0;
 let setupFeeBase = 0;
 let tabletCosto = 0;
 let lettoreCosto = 0;
 
+// === Prezzi base ===
 const prezzi = {
   starter: {
     solo: [109, 99, 89, 69, 59, 49, 29, 19],
@@ -22,6 +23,7 @@ const prezzi = {
 const setup = [99, 119, 129, 149, 199, 299, 499, 899];
 const soglie = [1, 2, 4, 6, 8, 10, 15, 20];
 
+// === Utility ===
 function getIndiceStanze(stanze) {
   for (let i = 0; i < soglie.length; i++) {
     if (stanze <= soglie[i]) return i;
@@ -29,11 +31,13 @@ function getIndiceStanze(stanze) {
   return soglie.length - 1;
 }
 
+// === Eventi iniziali ===
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("calculate-btn").addEventListener("click", calcolaPreventivo);
   document.getElementById("check-btn").addEventListener("click", startPromoCheck);
 });
 
+// === Calcolo preventivo base ===
 function calcolaPreventivo() {
   const stanze = parseInt(document.getElementById("rooms").value);
   const medici = parseInt(document.getElementById("doctors").value);
@@ -43,7 +47,7 @@ function calcolaPreventivo() {
   const lettore = document.getElementById("lettoreTessera").checked;
 
   if (isNaN(stanze) || isNaN(medici) || stanze <= 0 || medici <= 0) {
-    alert("Inserisci valori validi per ambulatori e dottori.");
+    alert("Inserisci valori validi per ambulatori e medici.");
     return;
   }
 
@@ -63,6 +67,7 @@ function calcolaPreventivo() {
   const setupListino = setupFeeBase * 1.25;
   const totaleListino = setupListino + tabletCosto + lettoreCosto;
 
+  // Mostra sezione listino
   document.getElementById("monthly-list-price").textContent = `${canoneListino.toFixed(2)} €`;
   document.getElementById("setup-list-price").textContent = `${setupListino.toFixed(2)} €`;
   document.getElementById("setup-total").textContent = `${totaleListino.toFixed(2)} €`;
@@ -72,6 +77,7 @@ function calcolaPreventivo() {
   document.getElementById("dettaglio-panel").classList.add("hidden");
 }
 
+// === Verifica condizioni riservate ===
 function startPromoCheck() {
   const spinner = document.getElementById("loading-spinner");
   const promoPanel = document.getElementById("dettaglio-panel");
@@ -92,13 +98,13 @@ function startPromoCheck() {
       spinner.classList.add("hidden");
       promoPanel.classList.remove("hidden");
 
-      const totalePromo = setupFeeBase + tabletCosto + lettoreCosto;
+      // Prezzi reali
+      const setupTotalePromo = setupFeeBase + tabletCosto + lettoreCosto;
+      const canoneListino = canoneMensileBase * 1.25;
+      const setupListino = setupFeeBase * 1.25;
 
       document.getElementById("default-monthly-price").textContent = `${canoneMensileBase.toFixed(2)} €`;
       document.getElementById("setup-fee").textContent = `${setupFeeBase.toFixed(2)} €`;
-
-      const canoneListino = canoneMensileBase * 1.25;
-      const setupListino = setupFeeBase * 1.25;
 
       document.getElementById("list-monthly-crossed").textContent = `${canoneListino.toFixed(2)} €`;
       document.getElementById("list-setup-crossed").textContent = `${setupListino.toFixed(2)} €`;
