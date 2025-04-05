@@ -26,10 +26,9 @@ body {
   padding: 24px;
 }
 
-/* Layout a due colonne */
 .layout-container {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* Forza affiancamento fisso */
   justify-content: space-between;
   align-items: stretch;
   gap: 40px;
@@ -53,7 +52,7 @@ body {
   border: 1px solid var(--border);
 }
 
-/* Previeni contenuti troppo larghi nella presentazione */
+/* Impedisce che immagini o elementi nella colonna sinistra allunghino la pagina */
 .presentation img,
 .presentation iframe,
 .presentation div {
@@ -147,7 +146,6 @@ select:focus {
   height: 16px;
 }
 
-/* Pulsanti */
 .btn-primary,
 .btn-outline {
   display: block;
@@ -256,11 +254,4 @@ select:focus {
   margin-right: 6px;
 }
 
-/* Responsive */
-@media (max-width: 900px) {
-  .presentation,
-  .form-box {
-    max-width: 100%;
-    flex: 1 1 100%;
-  }
-}
+/* ❌ Nessuna media query: layout fisso affiancato sempre */
