@@ -1,14 +1,8 @@
-// ✅ Protezione accesso con localStorage
-(function protezioneAccesso() {
-  const refOk = document.referrer.includes("alfpes24.github.io") || window.opener;
-  const accessoConsentito = localStorage.getItem("accessoGipo") === "ok";
-  if (!accessoConsentito || !refOk) {
-    document.body.innerHTML = "<h2 style='color: red; text-align: center;'>Accesso non autorizzato</h2>";
-    setTimeout(() => location.replace("https://alfpes24.github.io/"), 1500);
-  }
-})();
+let canoneMensileBase = 0;
+let setupFeeBase = 0;
+let tabletCosto = 0;
+let lettoreCosto = 0;
 
-// ✅ Dati di configurazione
 const prezzi = {
   starter: {
     solo: [109, 99, 89, 69, 59, 49, 29, 19],
@@ -34,7 +28,6 @@ function getIndiceStanze(stanze) {
   return soglie.length - 1;
 }
 
-// ✅ Eventi su caricamento pagina
 document.addEventListener("DOMContentLoaded", function () {
   const calculateBtn = document.getElementById("calculate-btn");
   const checkBtn = document.getElementById("check-btn");
@@ -58,22 +51,27 @@ document.addEventListener("DOMContentLoaded", function () {
         clearInterval(interval);
         spinner.style.display = "none";
         dettaglioPanel.style.display = "block";
+
+        // RIMETTIAMO I VALORI SALVATI
+        const setupTotale = setupFeeBase + tabletCosto + lettoreCosto;
+        document.getElementById("default-monthly-price").textContent = `${canoneMensileBase.toFixed(2)} €`;
+        document.getElementById("setup-fee").textContent = `${setupFeeBase.toFixed(2)} €`;
+        document.getElementById("setup-total").textContent = `${setupTotale.toFixed(2)} €`;
       }
     }, 1000);
   });
 });
 
-// ✅ Calcolo preventivo
 function calcolaPreventivo() {
-  const stanze = Math.floor(parseFloat(document.getElementById("rooms").value));
-  const medici = Math.floor(parseFloat(document.getElementById("doctors").value));
+  const stanze = parseInt(document.getElementById("rooms").value);
+  const medici = parseInt(document.getElementById("doctors").value);
   const bundle = document.getElementById("bundle").value || "plus";
   const crm = document.getElementById("crm").checked;
   const tablet = document.getElementById("tabletFirma").checked;
   const lettore = document.getElementById("lettoreTessera").checked;
 
-  if (isNaN(stanze) || isNaN(medici) || stanze <= 0 || medici <= 0) {
-    mostraErrore("Inserisci un numero valido di ambulatori e medici.");
+  if (isNaN(stanze) || isNaN(medici) || stanze <= 0) {
+    alert("Inserisci un numero valido di ambulatori e medici.");
     return;
   }
 
@@ -84,39 +82,26 @@ function calcolaPreventivo() {
     prezzoUnitario = prezzoUnitario / 1.5;
   }
 
-  const canoneMensileBase = prezzoUnitario * stanze;
-  const setupFeeBase = setup[idx];
+  canoneMensileBase = prezzoUnitario * stanze;
+  setupFeeBase = setup[idx];
+  tabletCosto = tablet ? 429 : 0;
+  lettoreCosto = lettore ? 79 : 0;
 
-  const setupPromozionaleConMargine = setupFeeBase * 1.25;
-  const tabletConMargine = tablet ? 429 : 0;
-  const lettoreConMargine = lettore ? 79 : 0;
-
-  const setupTotale = setupPromozionaleConMargine + tabletConMargine + lettoreConMargine;
-
+  const setupTotale = setupFeeBase + tabletCosto + lettoreCosto;
   const listinoMensile = canoneMensileBase * 1.25;
   const listinoSetup = setupFeeBase * 1.25;
 
+  // Mostra listino
   document.getElementById("monthly-list-price").textContent = `${listinoMensile.toFixed(2)} €`;
   document.getElementById("setup-list-price").textContent = `${listinoSetup.toFixed(2)} €`;
-  document.getElementById("setup-total").textContent = `${setupTotale.toFixed(2)} €`;
 
-  const totaleCostiFinale = listinoSetup + tabletConMargine + lettoreConMargine;
-  document.getElementById("totale-costi").textContent = `${totaleCostiFinale.toFixed(2)} €`;
+  // Prepara i valori (che poi mostrerà il checkBtn)
+  document.getElementById("default-monthly-price").textContent = `${canoneMensileBase.toFixed(2)} €`;
+  document.getElementById("setup-fee").textContent = `${setupFeeBase.toFixed(2)} €`;
+  document.getElementById("setup-total").textContent = `${setupTotale.toFixed(2)} €`;
 
   document.getElementById("results").style.display = "block";
   document.getElementById("listino-panel").style.display = "block";
   document.getElementById("dettaglio-panel").style.display = "none";
   document.getElementById("loading-spinner").style.display = "none";
-}
-
-// ✅ Messaggi di errore eleganti
-function mostraErrore(msg) {
-  const div = document.createElement("div");
-  div.style.color = "red";
-  div.style.textAlign = "center";
-  div.style.fontWeight = "bold";
-  div.style.marginBottom = "12px";
-  div.textContent = msg;
-  document.querySelector("form").prepend(div);
-  setTimeout(() => div.remove(), 3000);
 }
