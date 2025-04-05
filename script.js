@@ -46,7 +46,7 @@ function calcolaPreventivo() {
   // Sconto se rapporto medici/stanze <= 1.3
   const rapporto = medici / stanze;
   if (rapporto <= 1.3) {
-    prezzoUnitario = prezzoUnitario / 1.5;
+    prezzoUnitario = prezzoUnitario / 1.5; 
   }
 
   const canoneMensileBase = prezzoUnitario * stanze;
