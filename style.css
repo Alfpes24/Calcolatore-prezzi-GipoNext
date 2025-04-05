@@ -33,7 +33,6 @@ body {
   margin: 0 auto;
 }
 
-/* --- Card Section --- */
 .card {
   background-color: var(--white);
   border-radius: var(--radius);
@@ -44,9 +43,8 @@ body {
   gap: 24px;
 }
 
-/* --- Promo Section --- */
 .promo-section h1 {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 600;
   color: var(--primary);
 }
@@ -57,10 +55,27 @@ body {
   margin-bottom: 12px;
 }
 
+.promo-btn {
+  display: inline-block;
+  margin-top: 12px;
+  background-color: var(--accent);
+  color: white;
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.promo-btn:hover {
+  background-color: var(--accent-hover);
+}
+
 .trusted-doctors {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-top: 16px;
 }
 
 .trusted-doctors img {
@@ -71,9 +86,12 @@ body {
   box-shadow: var(--shadow);
 }
 
-/* --- Form Section --- */
+.promo-text {
+  margin-left: 10px;
+}
+
 .form-section h2 {
-  font-size: 20px;
+  font-size: 22px;
   margin-bottom: 16px;
   color: var(--primary);
 }
@@ -136,7 +154,6 @@ button:hover,
   background-color: #d1d5db;
 }
 
-/* --- Risultati --- */
 .results {
   background-color: #e9f9f7;
   border: 1px solid #c5f1ea;
@@ -162,7 +179,6 @@ button:hover,
   color: var(--text);
 }
 
-/* Spinner Countdown */
 .spinner {
   width: 28px;
   height: 28px;
@@ -186,7 +202,6 @@ button:hover,
   margin-top: 12px;
 }
 
-/* --- Firma/Promo Card Style --- */
 .promo-card {
   background-color: var(--white);
   border: 2px solid var(--accent);
@@ -223,7 +238,6 @@ button:hover,
   font-size: 15px;
 }
 
-/* Firma Button */
 .firma-buttons {
   display: flex;
   justify-content: center;
@@ -245,7 +259,6 @@ button:hover,
   background-color: var(--accent-hover);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .layout {
     padding: 20px;
