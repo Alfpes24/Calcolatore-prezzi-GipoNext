@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 
-  <!-- Protezione accesso riservato -->
+  <!-- Accesso riservato -->
   <script>
     const refOk = document.referrer.includes("alfpes24.github.io") || window.opener;
     const accesso = localStorage.getItem("accesso_consentito") === "ok";
@@ -17,26 +17,25 @@
     }
   </script>
 </head>
+
 <body>
   <div class="layout-container">
-
-    <!-- COLONNA SINISTRA: PRESENTAZIONE GIPONEXT -->
+    
+    <!-- COLONNA SINISTRA -->
     <section class="presentation">
       <img src="https://via.placeholder.com/160x40?text=GipoNext" alt="Logo GipoNext" class="logo" />
       <h1>Il gestionale per ambulatori più evoluto in Italia</h1>
       <p class="lead">Digitalizza la tua struttura sanitaria con uno strumento completo, sicuro e facile da usare.</p>
-
       <ul class="features">
         <li><span>☁️</span> 100% in cloud, accessibile ovunque</li>
         <li><span>🔐</span> Dati protetti con standard elevati</li>
         <li><span>⚙️</span> Integrazione completa con MioDottore</li>
         <li><span>✍️</span> Firma digitale e prenotazioni automatiche</li>
       </ul>
-
       <div class="badge">Scelto da oltre 4.000 strutture sanitarie</div>
     </section>
 
-    <!-- COLONNA DESTRA: FORM CONFIGURAZIONE -->
+    <!-- COLONNA DESTRA -->
     <section class="form-box">
       <form id="calculator-form">
         <h2>Configura il tuo preventivo</h2>
@@ -75,10 +74,9 @@
         <button type="button" id="calculate-btn" class="btn-primary">Calcola</button>
       </form>
     </section>
-
   </div>
 
-  <!-- SEZIONE RISULTATI LISTINO -->
+  <!-- RISULTATI LISTINO -->
   <section class="card hidden" id="results">
     <div class="price-row">
       <span>Canone mensile a listino</span>
@@ -95,7 +93,7 @@
     <button class="btn-outline" id="check-btn">Verifica condizioni riservate</button>
   </section>
 
-  <!-- VERIFICA CON ECG + COUNTDOWN -->
+  <!-- VERIFICA OFFERTA -->
   <section class="card hidden" id="loading-spinner">
     <h2>Sto verificando<br />se ci sono condizioni riservate…</h2>
     <div class="ecg-container">
@@ -125,7 +123,7 @@
     </p>
   </section>
 
-  <!-- OFFERTA RISERVATA SBLOCCATA -->
+  <!-- OFFERTA RISERVATA -->
   <section class="card hidden" id="dettaglio-panel">
     <h2 class="highlight">Ottime notizie!</h2>
     <p class="subtitle">
