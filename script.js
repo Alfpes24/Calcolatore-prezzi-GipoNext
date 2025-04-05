@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // 🔐 Protezione: consente l’accesso solo se passato dalla pagina protetta
-  if (!sessionStorage.getItem("accesso_consentito")) {
+  // 🔐 Protezione con localStorage (funziona tra repo GitHub Pages)
+  if (!localStorage.getItem("accesso_consentito")) {
     window.location.href = "https://alfpes24.github.io/Accesso-calcolatori/";
     return;
   }
