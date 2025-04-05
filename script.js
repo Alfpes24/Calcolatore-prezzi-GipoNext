@@ -1,86 +1,115 @@
+// === VARIABILI GLOBALI ===
+let canoneMensileBase = 0;
+let setupFeeBase = 0;
+let tabletCosto = 0;
+let lettoreCosto = 0;
+
+// === PREZZI BASE ===
+const prezzi = {
+  starter: {
+    solo: [109, 99, 89, 69, 59, 49, 29, 19],
+    crm:  [119, 109, 99, 79, 69, 59, 39, 29]
+  },
+  plus: {
+    solo: [129, 119, 109, 89, 69, 59, 49, 39],
+    crm:  [139, 129, 119, 99, 79, 69, 59, 49]
+  },
+  vip: {
+    solo: [139, 129, 119, 99, 79, 69, 59, 49],
+    crm:  [149, 139, 129, 109, 89, 79, 69, 59]
+  }
+};
+
+const setup = [99, 119, 129, 149, 199, 299, 499, 899];
+const soglie = [1, 2, 4, 6, 8, 10, 15, 20];
+
+// === FUNZIONE DI CALCOLO INDICE ===
+function getIndiceStanze(stanze) {
+  for (let i = 0; i < soglie.length; i++) {
+    if (stanze <= soglie[i]) return i;
+  }
+  return soglie.length - 1;
+}
+
+// === GESTIONE EVENTI DOM ===
 document.addEventListener("DOMContentLoaded", () => {
-  // 🔐 Protezione con localStorage (funziona tra repo GitHub Pages)
-  if (!localStorage.getItem("accesso_consentito")) {
-    window.location.href = "https://alfpes24.github.io/Accesso-calcolatori/";
+  const calculateBtn = document.getElementById("calculate-btn");
+  const checkBtn = document.getElementById("check-btn");
+  const spinner = document.getElementById("loading-spinner");
+  const countdown = document.getElementById("countdown");
+  const dettaglioPanel = document.getElementById("dettaglio-panel");
+
+  calculateBtn.addEventListener("click", calcolaPreventivo);
+
+  checkBtn.addEventListener("click", () => {
+    spinner.style.display = "block";
+    countdown.textContent = "Attendere 15 secondi...";
+    dettaglioPanel.style.display = "none";
+
+    let seconds = 15;
+    const interval = setInterval(() => {
+      seconds--;
+      countdown.textContent = `Attendere ${seconds} secondi...`;
+
+      if (seconds <= 0) {
+        clearInterval(interval);
+        spinner.style.display = "none";
+        dettaglioPanel.style.display = "block";
+
+        // === PROMOZIONE ===
+        const setupFeePromo = setupFeeBase;
+        const totalePromoUnaTantum = setupFeePromo + tabletCosto + lettoreCosto;
+
+        document.getElementById("default-monthly-price").textContent = `${canoneMensileBase.toFixed(2)} €`;
+        document.getElementById("setup-fee").textContent = `${setupFeePromo.toFixed(2)} €`;
+        document.getElementById("setup-total-promo").textContent = `${totalePromoUnaTantum.toFixed(2)} €`;
+      }
+    }, 1000);
+  });
+});
+
+// === FUNZIONE DI CALCOLO PRINCIPALE ===
+function calcolaPreventivo() {
+  const stanze = parseInt(document.getElementById("rooms").value);
+  const medici = parseInt(document.getElementById("doctors").value);
+  const bundle = document.getElementById("bundle").value || "plus";
+  const crm = document.getElementById("crm").checked;
+  const tablet = document.getElementById("tabletFirma").checked;
+  const lettore = document.getElementById("lettoreTessera").checked;
+
+  if (isNaN(stanze) || isNaN(medici) || stanze <= 0) {
+    alert("Inserisci un numero valido di ambulatori e medici.");
     return;
   }
 
-  const calculateBtn = document.getElementById("calculate-btn");
-  const results = document.getElementById("results");
-  const listinoPanel = document.getElementById("listino-panel");
-  const dettaglioPanel = document.getElementById("dettaglio-panel");
-  const spinner = document.getElementById("loading-spinner");
-  const countdown = document.getElementById("countdown");
+  // === CALCOLO PREZZO BASE ===
+  const idx = getIndiceStanze(stanze);
+  let prezzoUnitario = prezzi[bundle][crm ? "crm" : "solo"][idx];
 
-  calculateBtn.addEventListener("click", () => {
-    const rooms = parseInt(document.getElementById("rooms").value) || 0;
-    const doctors = parseInt(document.getElementById("doctors").value) || 0;
-    const bundle = document.getElementById("bundle").value;
-    const crm = document.getElementById("crm").checked;
-    const tablet = document.getElementById("tabletFirma").checked;
-    const ts = document.getElementById("lettoreTessera").checked;
+  // Applico sconto se rapporto medici/stanze ≤ 1.3
+  if ((medici / stanze) <= 1.3) {
+    prezzoUnitario = prezzoUnitario / 1.5;
+  }
 
-    // Logica bundle mensile
-    let baseMonthly = 0;
-    if (bundle === "starter") baseMonthly = 149;
-    if (bundle === "plus") baseMonthly = 189;
-    if (bundle === "vip") baseMonthly = 219;
+  // === COSTI BASE E OPTIONAL ===
+  canoneMensileBase = prezzoUnitario * stanze;
+  setupFeeBase = setup[idx];
+  tabletCosto = tablet ? 429 : 0;
+  lettoreCosto = lettore ? 79 : 0;
 
-    if (crm) baseMonthly += 20;
-    const ratio = doctors / rooms;
-    if (ratio <= 1.3) baseMonthly -= 10;
+  // === COSTI A LISTINO ===
+  const canoneListino = canoneMensileBase * 1.25;
+  const setupListino = setupFeeBase * 1.25;
+  const totaleUnaTantumListino = setupListino + tabletCosto + lettoreCosto;
 
-    // Logica setup
-    let setupFee = 0;
-    if (rooms <= 2) setupFee = 290;
-    else if (rooms <= 4) setupFee = 390;
-    else if (rooms <= 6) setupFee = 490;
-    else setupFee = 590;
+  // === OUTPUT UI ===
+  document.getElementById("monthly-list-price").textContent = `${canoneListino.toFixed(2)} €`;
+  document.getElementById("setup-list-price").textContent = `${setupListino.toFixed(2)} €`;
+  document.getElementById("setup-total").textContent = `${totaleUnaTantumListino.toFixed(2)} €`;
 
-    if (tablet) setupFee += 429;
-    if (ts) setupFee += 79;
-
-    // Prezzo a listino
-    const listino = Math.round(baseMonthly * 1.25);
-    const setupListino = Math.round(setupFee * 1.25);
-
-    // Mostra listino
-    document.getElementById("monthly-list-price").textContent = `€${listino}`;
-    document.getElementById("setup-list-price").textContent = `€${setupListino}`;
-    document.getElementById("setup-total").textContent = `€${setupListino}`;
-
-    results.style.display = "block";
-    listinoPanel.style.display = "block";
-    dettaglioPanel.style.display = "none";
-    spinner.style.display = "none";
-  });
-
-  document.getElementById("check-btn").addEventListener("click", () => {
-    spinner.style.display = "block";
-    let seconds = 15;
-    countdown.textContent = `Verifica in corso... Attendere ${seconds} secondi`;
-
-    const interval = setInterval(() => {
-      seconds--;
-      countdown.textContent = `Verifica in corso... Attendere ${seconds} secondi`;
-    }, 1000);
-
-    setTimeout(() => {
-      clearInterval(interval);
-      spinner.style.display = "none";
-      countdown.textContent = "";
-
-      const monthly = parseInt(document.getElementById("monthly-list-price").textContent.replace("€", ""));
-      const setup = parseInt(document.getElementById("setup-list-price").textContent.replace("€", ""));
-
-      const promoMonthly = Math.round(monthly * 0.85);
-      const promoSetup = Math.round(setup * 0.5);
-
-      document.getElementById("default-monthly-price").textContent = `€${promoMonthly}`;
-      document.getElementById("setup-fee").textContent = `€${promoSetup}`;
-      document.getElementById("setup-total-promo").textContent = `€${promoSetup}`;
-
-      dettaglioPanel.style.display = "block";
-    }, 15000);
-  });
-});
+  // Mostra risultati
+  document.getElementById("results").style.display = "block";
+  document.getElementById("listino-panel").style.display = "block";
+  document.getElementById("dettaglio-panel").style.display = "none";
+  document.getElementById("loading-spinner").style.display = "none";
+}
