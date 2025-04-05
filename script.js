@@ -1,3 +1,4 @@
+// Variabili globali per memorizzare costi
 let canoneMensileBase = 0;
 let setupFeeBase = 0;
 let tabletCosto = 0;
@@ -52,11 +53,14 @@ document.addEventListener("DOMContentLoaded", function () {
         spinner.style.display = "none";
         dettaglioPanel.style.display = "block";
 
-        // RIMETTIAMO I VALORI SALVATI
-        const setupTotale = setupFeeBase + tabletCosto + lettoreCosto;
-        document.getElementById("default-monthly-price").textContent = `${canoneMensileBase.toFixed(2)} €`;
-        document.getElementById("setup-fee").textContent = `${setupFeeBase.toFixed(2)} €`;
-        document.getElementById("setup-total").textContent = `${setupTotale.toFixed(2)} €`;
+        // Calcolo PROMO
+        const canonePromo = canoneMensileBase;
+        const setupPromo = setupFeeBase;
+        const totalePromo = setupPromo + tabletCosto + lettoreCosto;
+
+        document.getElementById("default-monthly-price").textContent = `${canonePromo.toFixed(2)} €`;
+        document.getElementById("setup-fee").textContent = `${setupPromo.toFixed(2)} €`;
+        document.getElementById("setup-total-promo").textContent = `${totalePromo.toFixed(2)} €`;
       }
     }, 1000);
   });
@@ -82,6 +86,7 @@ function calcolaPreventivo() {
     prezzoUnitario = prezzoUnitario / 1.5;
   }
 
+  // Memorizza costi base
   canoneMensileBase = prezzoUnitario * stanze;
   setupFeeBase = setup[idx];
   tabletCosto = tablet ? 429 : 0;
@@ -91,13 +96,9 @@ function calcolaPreventivo() {
   const listinoMensile = canoneMensileBase * 1.25;
   const listinoSetup = setupFeeBase * 1.25;
 
-  // Mostra listino
+  // Popola i campi nel DOM
   document.getElementById("monthly-list-price").textContent = `${listinoMensile.toFixed(2)} €`;
   document.getElementById("setup-list-price").textContent = `${listinoSetup.toFixed(2)} €`;
-
-  // Prepara i valori (che poi mostrerà il checkBtn)
-  document.getElementById("default-monthly-price").textContent = `${canoneMensileBase.toFixed(2)} €`;
-  document.getElementById("setup-fee").textContent = `${setupFeeBase.toFixed(2)} €`;
   document.getElementById("setup-total").textContent = `${setupTotale.toFixed(2)} €`;
 
   document.getElementById("results").style.display = "block";
