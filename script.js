@@ -24,16 +24,19 @@ function getIndiceStanze(stanze) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  document.getElementById("calculate-btn").addEventListener("click", calcolaPreventivo);
+  const btn = document.getElementById("calculate-btn");
+  if (btn) {
+    btn.addEventListener("click", calcolaPreventivo);
+  }
 });
 
 function calcolaPreventivo() {
   const stanze = parseInt(document.getElementById("rooms").value);
   const medici = parseInt(document.getElementById("doctors").value);
-  const bundle = document.getElementById("bundle")?.value || "plus"; // default: plus
-  const crm = document.getElementById("crm")?.checked || false;
-  const ecr = document.getElementById("moduloECR")?.checked || false;
-  const smartq = document.getElementById("moduloSmartQ")?.checked || false;
+  const bundle = document.getElementById("bundle").value || "plus";
+  const crm = document.getElementById("crm").checked;
+  const ecr = document.getElementById("moduloECR").checked;
+  const smartq = document.getElementById("moduloSmartQ").checked;
 
   if (isNaN(stanze) || isNaN(medici) || stanze <= 0) {
     alert("Inserisci un numero valido di ambulatori e medici.");
@@ -43,10 +46,9 @@ function calcolaPreventivo() {
   const idx = getIndiceStanze(stanze);
   let prezzoUnitario = prezzi[bundle][crm ? "crm" : "solo"][idx];
 
-  // Sconto se rapporto medici/stanze <= 1.3
-  const rapporto = medici / stanze;
-  if (rapporto <= 1.3) {
-    prezzoUnitario = prezzoUnitario / 1.5; 
+  // Sconto se rapporto medici/stanze ≤ 1.3
+  if ((medici / stanze) <= 1.3) {
+    prezzoUnitario = prezzoUnitario / 1.5;
   }
 
   const canoneMensileBase = prezzoUnitario * stanze;
@@ -58,7 +60,7 @@ function calcolaPreventivo() {
   const canoneTotaleMensile = canoneMensileBase + moduliMensili;
   const setupTotale = setupFeeBase + moduliSetup;
 
-  // Output nei campi HTML
+  // Output risultati
   document.getElementById("default-monthly-price").textContent = `${canoneTotaleMensile.toFixed(2)} €`;
   document.getElementById("setup-fee").textContent = `${setupTotale.toFixed(2)} €`;
   document.getElementById("results").style.display = "block";
