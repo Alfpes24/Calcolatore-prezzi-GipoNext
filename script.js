@@ -56,8 +56,13 @@ function calcolaPreventivo() {
   const canoneTotaleMensile = canoneMensileBase;
   const setupTotale = setupFeeBase + tabletCosto + lettoreCosto;
 
+  const listinoMensile = canoneTotaleMensile * 1.25;
+  const listinoSetup = setupFeeBase * 1.25;
+
   document.getElementById("default-monthly-price").textContent = `${canoneTotaleMensile.toFixed(2)} €`;
   document.getElementById("setup-fee").textContent = `${setupFeeBase.toFixed(2)} €`;
   document.getElementById("setup-total").textContent = `${setupTotale.toFixed(2)} €`;
+  document.getElementById("monthly-list-price").textContent = `${listinoMensile.toFixed(2)} €`;
+  document.getElementById("setup-list-price").textContent = `${listinoSetup.toFixed(2)} €`;
   document.getElementById("results").style.display = "block";
 }
