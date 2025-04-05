@@ -1,4 +1,4 @@
-// ✅ Protezione accesso con localStorage (funziona tra progetti GitHub Pages)
+// ✅ Protezione accesso con localStorage
 (function protezioneAccesso() {
   const refOk = document.referrer.includes("alfpes24.github.io") || window.opener;
   const accessoConsentito = localStorage.getItem("accessoGipo") === "ok";
@@ -90,6 +90,7 @@ function calcolaPreventivo() {
   const setupPromozionaleConMargine = setupFeeBase * 1.25;
   const tabletConMargine = tablet ? 429 : 0;
   const lettoreConMargine = lettore ? 79 : 0;
+
   const setupTotale = setupPromozionaleConMargine + tabletConMargine + lettoreConMargine;
 
   const listinoMensile = canoneMensileBase * 1.25;
@@ -97,9 +98,10 @@ function calcolaPreventivo() {
 
   document.getElementById("monthly-list-price").textContent = `${listinoMensile.toFixed(2)} €`;
   document.getElementById("setup-list-price").textContent = `${listinoSetup.toFixed(2)} €`;
-  document.getElementById("default-monthly-price").textContent = `${canoneMensileBase.toFixed(2)} €`;
-  document.getElementById("setup-fee").textContent = `${setupFeeBase.toFixed(2)} €`;
   document.getElementById("setup-total").textContent = `${setupTotale.toFixed(2)} €`;
+
+  const totaleCostiFinale = listinoSetup + tabletConMargine + lettoreConMargine;
+  document.getElementById("totale-costi").textContent = `${totaleCostiFinale.toFixed(2)} €`;
 
   document.getElementById("results").style.display = "block";
   document.getElementById("listino-panel").style.display = "block";
