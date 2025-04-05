@@ -5,28 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Preventivo GIPO | MioDottore</title>
 
-  <script>
-    const refOk = document.referrer.includes("alfpes24.github.io") || window.opener;
-    const accesso = localStorage.getItem("accessoGipo") === "ok";
-    if (!accesso || !refOk) {
-      document.write("<h2 style='color:red;text-align:center;'>Accesso non autorizzato</h2>");
-      setTimeout(() => location.replace("https://alfpes24.github.io/"), 1500);
-    }
-  </script>
-
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 </head>
 
 <body>
-  <main class="layout">
+  <main class="container">
 
     <!-- Promo -->
     <section class="promo-section">
       <h1>Il gestionale perfetto per la tua struttura</h1>
-      <p class="description">
-        GIPO semplifica la gestione del poliambulatorio. Più efficienza, più pazienti, più risultati.
-      </p>
+      <p class="description">GIPO semplifica la gestione del poliambulatorio. Più efficienza, più pazienti, più risultati.</p>
       <a class="promo-btn" href="https://www.miodottore.it" target="_blank">Scopri di più</a>
 
       <div class="trusted-doctors">
@@ -40,10 +29,9 @@
       </div>
     </section>
 
-    <!-- Form -->
+    <!-- Calcolatore -->
     <section class="form-section">
       <h2>Calcola il canone mensile di GipoNext</h2>
-
       <form id="calculator-form" novalidate>
         <div class="form-group">
           <label for="rooms">N° Ambulatori</label>
@@ -76,62 +64,33 @@
           <label><input type="checkbox" id="lettoreTessera" /> Lettore Tessera Sanitaria (+79€ una tantum)</label>
         </div>
 
-        <button type="button" id="calculate-btn">Calcola</button>
+        <button type="button" id="calculate-btn" class="btn-primary">Calcola</button>
       </form>
 
       <!-- Risultati -->
       <div id="results" class="results" style="display: none;">
-
-        <!-- Listino (dopo Calcola) -->
         <div id="listino-panel">
-          <div class="result-group">
-            <label>Canone Mensile a Listino</label>
-            <span id="monthly-list-price">0 €</span>
-          </div>
-
-          <div class="result-group">
-            <label>Setup Fee a Listino</label>
-            <span id="setup-list-price">0 €</span>
-          </div>
-
-          <div class="result-group">
-            <label>Totale costi una tantum</label>
-            <span id="setup-total">0 €</span>
-          </div>
-
+          <div class="result-group"><label>Canone Mensile a Listino</label><span id="monthly-list-price">0 €</span></div>
+          <div class="result-group"><label>Setup Fee a Listino</label><span id="setup-list-price">0 €</span></div>
+          <div class="result-group"><label>Totale costi una tantum</label><span id="setup-total">0 €</span></div>
           <div class="result-group check-buttons">
             <a class="btn-procedi" href="https://apps.docusign.com/send/templates?view=shared" target="_blank">Procedi</a>
             <button id="check-btn" class="btn-check">Check</button>
           </div>
-
           <div id="loading-spinner" style="display:none; margin-top: 20px;">
             <div class="spinner"></div>
             <div id="countdown" style="text-align: center; font-size: 14px; color: var(--muted); margin-top: 10px;"></div>
           </div>
         </div>
 
-        <!-- Dettagli (dopo Check) -->
         <div id="dettaglio-panel" style="display: none;">
-          <div class="result-group">
-            <label>Canone Mensile Promozionale</label>
-            <span id="default-monthly-price">0 €</span>
-          </div>
-
-          <div class="result-group">
-            <label>Setup Fee Promozionale</label>
-            <span id="setup-fee">0 €</span>
-          </div>
-
-          <div class="result-group">
-            <label>Totale costi una tantum</label>
-            <span id="setup-total-promo">0 €</span>
-          </div>
+          <div class="result-group"><label>Canone Mensile Promozionale</label><span id="default-monthly-price">0 €</span></div>
+          <div class="result-group"><label>Setup Fee Promozionale</label><span id="setup-fee">0 €</span></div>
+          <div class="result-group"><label>Totale costi una tantum</label><span id="setup-total-promo">0 €</span></div>
         </div>
-
       </div>
     </section>
   </main>
-
   <script src="script.js" defer></script>
 </body>
 </html>
