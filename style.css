@@ -26,6 +26,7 @@ body {
   padding: 24px;
 }
 
+/* Layout a due colonne */
 .layout-container {
   display: flex;
   flex-wrap: wrap;
@@ -39,6 +40,7 @@ body {
 .presentation {
   flex: 0 0 30%;
   max-width: 30%;
+  overflow: hidden;
 }
 
 .form-box {
@@ -49,6 +51,16 @@ body {
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
+}
+
+/* Previeni contenuti troppo larghi nella presentazione */
+.presentation img,
+.presentation iframe,
+.presentation div {
+  max-width: 100%;
+  height: auto;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .logo {
@@ -135,6 +147,7 @@ select:focus {
   height: 16px;
 }
 
+/* Pulsanti */
 .btn-primary,
 .btn-outline {
   display: block;
