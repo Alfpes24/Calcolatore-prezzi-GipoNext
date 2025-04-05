@@ -8,15 +8,15 @@ let lettoreCosto = 0;
 const prezzi = {
   starter: {
     solo: [109, 99, 89, 69, 59, 49, 29, 19],
-    crm:  [119, 109, 99, 79, 69, 59, 39, 29]
+    crm: [119, 109, 99, 79, 69, 59, 39, 29]
   },
   plus: {
     solo: [129, 119, 109, 89, 69, 59, 49, 39],
-    crm:  [139, 129, 119, 99, 79, 69, 59, 49]
+    crm: [139, 129, 119, 99, 79, 69, 59, 49]
   },
   vip: {
     solo: [139, 129, 119, 99, 79, 69, 59, 49],
-    crm:  [149, 139, 129, 109, 89, 79, 69, 59]
+    crm: [149, 139, 129, 109, 89, 79, 69, 59]
   }
 };
 
@@ -39,15 +39,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // === CALCOLO PREVENTIVO
 function calcolaPreventivo() {
-  const stanze = parseInt(document.getElementById("rooms")?.value || 3);
-  const medici = parseInt(document.getElementById("doctors")?.value || 5);
-  const bundle = document.getElementById("bundle")?.value || 'plus';
-  const crm = document.getElementById("crm")?.checked;
-  const tablet = document.getElementById("tabletFirma")?.checked;
-  const lettore = document.getElementById("lettoreTessera")?.checked;
+  const stanze = parseInt(document.getElementById("rooms").value);
+  const medici = parseInt(document.getElementById("doctors").value);
+  const bundle = document.getElementById("bundle").value;
+  const crm = document.getElementById("crm").checked;
+  const tablet = document.getElementById("tabletFirma").checked;
+  const lettore = document.getElementById("lettoreTessera").checked;
 
-  if (isNaN(stanze) || isNaN(medici) || stanze <= 0) {
-    alert("Inserisci un numero valido di ambulatori e medici.");
+  if (isNaN(stanze) || isNaN(medici) || stanze <= 0 || medici <= 0) {
+    alert("Inserisci valori validi per ambulatori e dottori.");
     return;
   }
 
@@ -67,15 +67,14 @@ function calcolaPreventivo() {
   const setupListino = setupFeeBase * 1.25;
   const totaleListino = setupListino + tabletCosto + lettoreCosto;
 
-  // Inserimento valori nella UI
+  // Mostra risultati a listino
   document.getElementById("monthly-list-price").textContent = `${canoneListino.toFixed(2)} €`;
   document.getElementById("setup-list-price").textContent = `${setupListino.toFixed(2)} €`;
   document.getElementById("setup-total").textContent = `${totaleListino.toFixed(2)} €`;
 
-  // Mostra i blocchi corretti
+  document.getElementById("results").classList.remove("hidden");
   document.getElementById("loading-spinner").classList.add("hidden");
   document.getElementById("dettaglio-panel").classList.add("hidden");
-  document.getElementById("results")?.classList.remove("hidden");
 }
 
 // === VERIFICA PROMOZIONE
@@ -89,18 +88,25 @@ function startPromoCheck() {
   let seconds = 15;
   const interval = setInterval(() => {
     seconds--;
+
     if (seconds < 0) {
       clearInterval(interval);
-
-      // Nascondi loading, mostra offerta
       spinner.classList.add("hidden");
       promoPanel.classList.remove("hidden");
 
       const totalePromo = setupFeeBase + tabletCosto + lettoreCosto;
 
+      // Offerta riservata
       document.getElementById("default-monthly-price").textContent = `${canoneMensileBase.toFixed(2)} €`;
       document.getElementById("setup-fee").textContent = `${setupFeeBase.toFixed(2)} €`;
       document.getElementById("setup-total-promo").textContent = `${totalePromo.toFixed(2)} €`;
+
+      // Prezzi barrati (listino)
+      const canoneListino = canoneMensileBase * 1.25;
+      const setupListino = setupFeeBase * 1.25;
+
+      document.getElementById("list-monthly-crossed").textContent = `${canoneListino.toFixed(2)} €`;
+      document.getElementById("list-setup-crossed").textContent = `${setupListino.toFixed(2)} €`;
     }
   }, 1000);
 }
