@@ -188,3 +188,36 @@ button:hover {
     padding: 30px 20px;
   }
 }
+.check-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.btn-check {
+  padding: 10px 20px;
+  background-color: #e2e8f0;
+  border: none;
+  color: var(--text);
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-check:hover {
+  background-color: #cbd5e1;
+}
+
+.btn-procedi {
+  padding: 10px 20px;
+  background-color: var(--secondary);
+  color: white;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.btn-procedi:hover {
+  background-color: var(--secondary-hover);
+}
