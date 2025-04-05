@@ -69,10 +69,10 @@
         <button type="button" id="calculate-btn">Calcola</button>
       </form>
 
-      <!-- Pannello risultati -->
+      <!-- Sezione risultati -->
       <div id="results" class="results" style="display: none;">
         
-        <!-- Pannello prezzi a listino (visibile dopo Calcola) -->
+        <!-- Pannello Listino -->
         <div id="listino-panel">
           <div class="result-group">
             <label>Canone Mensile a Listino (+25%)</label>
@@ -86,9 +86,14 @@
             <a class="btn-procedi" href="https://apps.docusign.com/send/templates?view=shared" target="_blank">Procedi</a>
             <button id="check-btn" class="btn-check">Check</button>
           </div>
+          <!-- Spinner + countdown -->
+          <div id="loading-spinner" style="display:none; margin-top: 20px;">
+            <div class="spinner"></div>
+            <div id="countdown" style="text-align: center; font-size: 14px; color: var(--muted); margin-top: 10px;"></div>
+          </div>
         </div>
 
-        <!-- Pannello dettagli reali (visibile solo dopo Check) -->
+        <!-- Pannello dettagli -->
         <div id="dettaglio-panel" style="display: none;">
           <div class="result-group">
             <label>Canone Mensile Totale</label>
