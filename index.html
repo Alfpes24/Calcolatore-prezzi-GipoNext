@@ -3,11 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Offerta GipoNext | MioDottore</title>
+  <title>Preventivo GipoNext - Offerta Riservata</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-
-  <!-- Blocco accesso diretto -->
   <script>
     const refOk = document.referrer.includes("alfpes24.github.io") || window.opener;
     const accesso = localStorage.getItem("accesso_consentito") === "ok";
@@ -20,43 +18,69 @@
 <body>
   <div class="container">
 
-    <!-- INTESTAZIONE -->
+    <!-- TITOLO -->
     <header class="header">
       <h1>La soluzione su misura per la tua struttura</h1>
-      <div class="card info-box">
-        <p><strong>Tipo struttura:</strong> Poliambulatorio</p>
-        <p><strong>Numero medici:</strong> 5</p>
-        <p><strong>Servizi selezionati:</strong> Agenda, CRM, Visibilità su Google</p>
-      </div>
+      <p class="subtitle">Calcola subito il preventivo su base reale</p>
     </header>
 
-    <!-- PREZZO A LISTINO -->
-    <section class="card">
-      <div class="price-row">
-        <span>Totale mensile</span>
-        <strong id="monthly-list-price">189 €</strong>
-      </div>
-      <div class="price-row">
-        <span>Setup una tantum</span>
-        <strong id="setup-list-price">590 €</strong>
-      </div>
-      <button class="btn-primary" id="calculate-btn">Procedi con questa configurazione</button>
+    <!-- FORM CONFIGURAZIONE -->
+    <section class="card form-section">
+      <form id="calculator-form">
+        <div class="form-group">
+          <label for="rooms">N° Ambulatori</label>
+          <input type="number" id="rooms" min="1" required />
+        </div>
+        <div class="form-group">
+          <label for="doctors">N° Dottori</label>
+          <input type="number" id="doctors" min="1" required />
+        </div>
+        <div class="form-group">
+          <label for="bundle">Versione GIPO</label>
+          <select id="bundle">
+            <option value="starter">Starter</option>
+            <option value="plus" selected>Plus</option>
+            <option value="vip">VIP</option>
+          </select>
+        </div>
+        <div class="form-group checkbox">
+          <label><input type="checkbox" id="crm" /> Includi CRM MioDottore</label>
+        </div>
+        <div class="form-group checkbox">
+          <label><input type="checkbox" id="tabletFirma" /> Tablet Firma Digitale (+429€)</label>
+        </div>
+        <div class="form-group checkbox">
+          <label><input type="checkbox" id="lettoreTessera" /> Lettore Tessera Sanitaria (+79€)</label>
+        </div>
+        <button type="button" id="calculate-btn" class="btn-primary">Calcola</button>
+      </form>
     </section>
 
-    <!-- CHECK PROMO -->
-    <section class="card promo-check">
-      <p><strong>Capisco. Mi faccia controllare se ci sono promozioni!</strong></p>
-      <button class="btn-outline" id="check-btn">Verifica condizioni riservate per la tua struttura</button>
+    <!-- PREZZI A LISTINO -->
+    <section class="card hidden" id="results">
+      <div class="price-row">
+        <span>Canone mensile a listino</span>
+        <strong id="monthly-list-price">-- €</strong>
+      </div>
+      <div class="price-row">
+        <span>Setup a listino</span>
+        <strong id="setup-list-price">-- €</strong>
+      </div>
+      <div class="price-row">
+        <span>Totale una tantum (setup + device)</span>
+        <strong id="setup-total">-- €</strong>
+      </div>
+      <button class="btn-outline" id="check-btn">Verifica condizioni riservate</button>
     </section>
 
     <!-- VERIFICA IN CORSO -->
     <section class="card hidden" id="loading-spinner">
-      <h2>Sto verificando<br />se ci sono condizioni riservate...</h2>
+      <h2>Sto verificando<br />se ci sono condizioni riservate…</h2>
       <div class="line-ecg"></div>
       <div class="badge">Offerta trovata</div>
       <p class="verifica-msg">
         <span class="loader-icon">🔄</span>
-        Verifica condizioni riservate per la tua struttura
+        Verifica in corso. Attendere qualche secondo...
       </p>
     </section>
 
@@ -64,28 +88,28 @@
     <section class="card promo hidden" id="dettaglio-panel">
       <h2 class="highlight">Ottime notizie!</h2>
       <p class="subtitle">
-        Per la sua configurazione è disponibile un’offerta riservata.<br />
-        <small>Condizione disponibile solo per la giornata odierna e limitata ad alcune strutture simili.</small>
+        È disponibile un’offerta riservata per la tua configurazione.<br />
+        <small>Valida solo per oggi e per alcune strutture selezionate.</small>
       </p>
 
       <div class="price-row">
         <span>Canone mensile</span>
         <div>
-          <strong id="default-monthly-price" class="promo-price">159 €</strong>
-          <span class="crossed">189 €</span>
+          <strong id="default-monthly-price" class="promo-price">-- €</strong>
+          <span class="crossed" id="list-monthly-crossed">-- €</span>
         </div>
       </div>
 
       <div class="price-row">
         <span>Setup una tantum</span>
         <div>
-          <strong id="setup-fee" class="promo-price">290 €</strong>
-          <span class="crossed">590 €</span>
+          <strong id="setup-fee" class="promo-price">-- €</strong>
+          <span class="crossed" id="list-setup-crossed">-- €</span>
         </div>
       </div>
 
       <div class="price-row">
-        <span>Bonus aggiuntivo</span>
+        <span>Bonus incluso</span>
         <strong class="bonus">1 mese omaggio + supporto marketing</strong>
       </div>
 
