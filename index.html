@@ -5,11 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Preventivo GIPO | MioDottore</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 </head>
 <body>
 
   <main class="layout">
+
+    <!-- Sezione promozionale -->
     <section class="promo-section">
       <h1>Il gestionale perfetto per la tua struttura</h1>
       <p class="description">
@@ -28,17 +30,21 @@
       </div>
     </section>
 
+    <!-- Sezione calcolo -->
     <section class="form-section">
       <h2>Calcola il canone mensile</h2>
+
       <form id="calculator-form">
         <div class="form-group">
           <label for="rooms">N° Ambulatori</label>
           <input type="number" id="rooms" min="1" required />
         </div>
+
         <div class="form-group">
           <label for="doctors">N° Dottori</label>
           <input type="number" id="doctors" min="1" required />
         </div>
+
         <div class="form-group">
           <label for="bundle">Versione GIPO</label>
           <select id="bundle">
@@ -47,53 +53,58 @@
             <option value="vip">VIP</option>
           </select>
         </div>
+
         <div class="form-group">
           <label><input type="checkbox" id="crm" /> Includi CRM MioDottore</label>
         </div>
+
         <div class="form-group">
           <label><input type="checkbox" id="tabletFirma" /> Tablet Samsung Firma Digitale (+429€ una tantum)</label>
         </div>
+
         <div class="form-group">
           <label><input type="checkbox" id="lettoreTessera" /> Lettore Tessera Sanitaria (+79€ una tantum)</label>
         </div>
+
         <button type="button" id="calculate-btn">Calcola</button>
       </form>
 
-      <div id="results" class="results" style="display:none;">
-  <!-- Listino visibile subito dopo Calcola -->
-  <div id="listino-panel">
-    <div class="result-group">
-      <label>Canone Mensile a Listino (+25%)</label>
-      <span id="monthly-list-price">0 €</span>
-    </div>
-    <div class="result-group">
-      <label>Setup Fee a Listino (+25%)</label>
-      <span id="setup-list-price">0 €</span>
-    </div>
+      <!-- Pannello risultati -->
+      <div id="results" class="results" style="display: none;">
+        
+        <!-- Pannello prezzi a listino (visibile dopo Calcola) -->
+        <div id="listino-panel">
+          <div class="result-group">
+            <label>Canone Mensile a Listino (+25%)</label>
+            <span id="monthly-list-price">0 €</span>
+          </div>
+          <div class="result-group">
+            <label>Setup Fee a Listino (+25%)</label>
+            <span id="setup-list-price">0 €</span>
+          </div>
+          <div class="result-group check-buttons">
+            <a class="btn-procedi" href="https://apps.docusign.com/send/templates?view=shared" target="_blank">Procedi</a>
+            <button id="check-btn" class="btn-check">Check</button>
+          </div>
+        </div>
 
-    <div class="result-group check-buttons">
-      <a class="btn-procedi" href="https://apps.docusign.com/send/templates?view=shared" target="_blank">Procedi</a>
-      <button id="check-btn" class="btn-check">Check</button>
-    </div>
-  </div>
+        <!-- Pannello dettagli reali (visibile solo dopo Check) -->
+        <div id="dettaglio-panel" style="display: none;">
+          <div class="result-group">
+            <label>Canone Mensile Totale</label>
+            <span id="default-monthly-price">0 €</span>
+          </div>
+          <div class="result-group">
+            <label>Setup Fee (una tantum)</label>
+            <span id="setup-fee">0 €</span>
+          </div>
+          <div class="result-group">
+            <label>Totale costi una tantum</label>
+            <span id="setup-total">0 €</span>
+          </div>
+        </div>
 
-  <!-- Pannello nascosto fino al click su Check -->
-  <div id="dettaglio-panel" style="display:none;">
-    <div class="result-group">
-      <label>Canone Mensile Totale</label>
-      <span id="default-monthly-price">0 €</span>
-    </div>
-    <div class="result-group">
-      <label>Setup Fee (una tantum)</label>
-      <span id="setup-fee">0 €</span>
-    </div>
-    <div class="result-group">
-      <label>Totale costi una tantum</label>
-      <span id="setup-total">0 €</span>
-    </div>
-  </div>
-</div>
-
+      </div>
     </section>
   </main>
 
