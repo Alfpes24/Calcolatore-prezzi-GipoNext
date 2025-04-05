@@ -24,10 +24,7 @@ function getIndiceStanze(stanze) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  const btn = document.getElementById("calculate-btn");
-  if (btn) {
-    btn.addEventListener("click", calcolaPreventivo);
-  }
+  document.getElementById("calculate-btn").addEventListener("click", calcolaPreventivo);
 });
 
 function calcolaPreventivo() {
@@ -35,8 +32,8 @@ function calcolaPreventivo() {
   const medici = parseInt(document.getElementById("doctors").value);
   const bundle = document.getElementById("bundle").value || "plus";
   const crm = document.getElementById("crm").checked;
-  const ecr = document.getElementById("moduloECR").checked;
-  const smartq = document.getElementById("moduloSmartQ").checked;
+  const tablet = document.getElementById("tabletFirma").checked;
+  const lettore = document.getElementById("lettoreTessera").checked;
 
   if (isNaN(stanze) || isNaN(medici) || stanze <= 0) {
     alert("Inserisci un numero valido di ambulatori e medici.");
@@ -46,7 +43,6 @@ function calcolaPreventivo() {
   const idx = getIndiceStanze(stanze);
   let prezzoUnitario = prezzi[bundle][crm ? "crm" : "solo"][idx];
 
-  // Sconto se rapporto medici/stanze ≤ 1.3
   if ((medici / stanze) <= 1.3) {
     prezzoUnitario = prezzoUnitario / 1.5;
   }
@@ -54,14 +50,14 @@ function calcolaPreventivo() {
   const canoneMensileBase = prezzoUnitario * stanze;
   const setupFeeBase = setup[idx];
 
-  const moduliMensili = (ecr ? 70 : 0) + (smartq ? 90 : 0);
-  const moduliSetup = smartq ? 299 : 0;
+  const tabletCosto = tablet ? 429 : 0;
+  const lettoreCosto = lettore ? 79 : 0;
 
-  const canoneTotaleMensile = canoneMensileBase + moduliMensili;
-  const setupTotale = setupFeeBase + moduliSetup;
+  const canoneTotaleMensile = canoneMensileBase;
+  const setupTotale = setupFeeBase + tabletCosto + lettoreCosto;
 
-  // Output risultati
   document.getElementById("default-monthly-price").textContent = `${canoneTotaleMensile.toFixed(2)} €`;
-  document.getElementById("setup-fee").textContent = `${setupTotale.toFixed(2)} €`;
+  document.getElementById("setup-fee").textContent = `${setupFeeBase.toFixed(2)} €`;
+  document.getElementById("setup-total").textContent = `${setupTotale.toFixed(2)} €`;
   document.getElementById("results").style.display = "block";
 }
