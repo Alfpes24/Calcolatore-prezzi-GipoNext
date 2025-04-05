@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <script>
-  if (sessionStorage.getItem("autenticato") !== "true") {
-    // Non autenticato → torna alla pagina principale
-    window.location.href = "https://alfpes24.github.io/";
-  }
-</script>  <meta charset="UTF-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Preventivo GIPO | MioDottore</title>
+
+  <!-- Protezione accesso (leggermente migliorata per fallback JS lento) -->
+  <script>
+    const refOk = document.referrer.includes("alfpes24.github.io") || window.opener;
+    if (sessionStorage.getItem("autenticato") !== "true" || !refOk) {
+      document.write("<h2 style='color:red;text-align:center;'>Accesso non autorizzato</h2>");
+      setTimeout(() => location.replace("https://alfpes24.github.io/"), 1500);
+    }
+  </script>
+
+  <!-- Stili -->
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 </head>
@@ -39,7 +45,7 @@
     <section class="form-section">
       <h2>Calcola il canone mensile di GipoNext</h2>
 
-      <form id="calculator-form">
+      <form id="calculator-form" novalidate>
         <div class="form-group">
           <label for="rooms">N° Ambulatori</label>
           <input type="number" id="rooms" min="1" required />
@@ -91,7 +97,6 @@
             <a class="btn-procedi" href="https://apps.docusign.com/send/templates?view=shared" target="_blank">Procedi</a>
             <button id="check-btn" class="btn-check">Check</button>
           </div>
-          <!-- Spinner + countdown -->
           <div id="loading-spinner" style="display:none; margin-top: 20px;">
             <div class="spinner"></div>
             <div id="countdown" style="text-align: center; font-size: 14px; color: var(--muted); margin-top: 10px;"></div>
@@ -118,6 +123,7 @@
     </section>
   </main>
 
+  <!-- Script -->
   <script src="script.js"></script>
 </body>
 </html>
