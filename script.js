@@ -25,9 +25,13 @@ function getIndiceStanze(stanze) {
 
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("calculate-btn").addEventListener("click", calcolaPreventivo);
+  document.getElementById("check-btn").addEventListener("click", function () {
+    document.getElementById("dettaglio-panel").style.display = "block";
+  });
 });
 
 function calcolaPreventivo() {
+  // Input
   const stanze = parseInt(document.getElementById("rooms").value);
   const medici = parseInt(document.getElementById("doctors").value);
   const bundle = document.getElementById("bundle").value || "plus";
@@ -40,42 +44,39 @@ function calcolaPreventivo() {
     return;
   }
 
+  // Prezzo unitario per stanza
   const idx = getIndiceStanze(stanze);
   let prezzoUnitario = prezzi[bundle][crm ? "crm" : "solo"][idx];
 
+  // Applica sconto se rapporto medici/stanze ≤ 1.3
   if ((medici / stanze) <= 1.3) {
     prezzoUnitario = prezzoUnitario / 1.5;
   }
 
+  // Canoni
   const canoneMensileBase = prezzoUnitario * stanze;
   const setupFeeBase = setup[idx];
+
+  // Costi opzionali una tantum
   const tabletCosto = tablet ? 429 : 0;
   const lettoreCosto = lettore ? 79 : 0;
-
-  const canoneTotaleMensile = canoneMensileBase;
   const setupTotale = setupFeeBase + tabletCosto + lettoreCosto;
 
-  const listinoMensile = canoneTotaleMensile * 1.25;
+  // Prezzi a listino (+25%)
+  const listinoMensile = canoneMensileBase * 1.25;
   const listinoSetup = setupFeeBase * 1.25;
 
-  // Mostra pannello risultati e solo i dati "a listino"
+  // Mostra risultati a listino
   document.getElementById("monthly-list-price").textContent = `${listinoMensile.toFixed(2)} €`;
   document.getElementById("setup-list-price").textContent = `${listinoSetup.toFixed(2)} €`;
 
-  // Salva temporaneamente i valori da mostrare dopo il click su "Check"
-  document.getElementById("default-monthly-price").textContent = `${canoneTotaleMensile.toFixed(2)} €`;
+  // Precarica i valori reali nel DOM (che si mostreranno solo al click su "Check")
+  document.getElementById("default-monthly-price").textContent = `${canoneMensileBase.toFixed(2)} €`;
   document.getElementById("setup-fee").textContent = `${setupFeeBase.toFixed(2)} €`;
   document.getElementById("setup-total").textContent = `${setupTotale.toFixed(2)} €`;
 
+  // Mostra pannello risultati con solo il listino
   document.getElementById("results").style.display = "block";
   document.getElementById("listino-panel").style.display = "block";
   document.getElementById("dettaglio-panel").style.display = "none";
 }
-
-// Mostra i dettagli al clic su "Check"
-document.addEventListener("DOMContentLoaded", function () {
-  document.getElementById("calculate-btn").addEventListener("click", calcolaPreventivo);
-  document.getElementById("check-btn").addEventListener("click", function () {
-    document.getElementById("dettaglio-panel").style.display = "block";
-  });
-});
