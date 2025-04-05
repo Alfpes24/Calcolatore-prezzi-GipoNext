@@ -12,7 +12,7 @@
 <body>
   <main class="container">
 
-    <!-- Promo -->
+    <!-- Sezione introduttiva -->
     <section class="promo-section">
       <h1>Il gestionale perfetto per la tua struttura</h1>
       <p class="description">GIPO semplifica la gestione del poliambulatorio. Più efficienza, più pazienti, più risultati.</p>
@@ -29,7 +29,7 @@
       </div>
     </section>
 
-    <!-- Calcolatore -->
+    <!-- Sezione calcolatore -->
     <section class="form-section">
       <h2>Calcola il canone mensile di GipoNext</h2>
       <form id="calculator-form" novalidate>
@@ -70,27 +70,52 @@
       <!-- Risultati -->
       <div id="results" class="results" style="display: none;">
         <div id="listino-panel">
-          <div class="result-group"><label>Canone Mensile a Listino</label><span id="monthly-list-price">0 €</span></div>
-          <div class="result-group"><label>Setup Fee a Listino</label><span id="setup-list-price">0 €</span></div>
-          <div class="result-group"><label>Totale costi una tantum</label><span id="setup-total">0 €</span></div>
+          <div class="result-group">
+            <label>Canone Mensile a Listino</label>
+            <span id="monthly-list-price">€0</span>
+          </div>
+
+          <div class="result-group">
+            <label>Setup Fee a Listino</label>
+            <span id="setup-list-price">€0</span>
+          </div>
+
+          <div class="result-group">
+            <label>Totale costi una tantum</label>
+            <span id="setup-total">€0</span>
+          </div>
+
           <div class="result-group check-buttons">
             <a class="btn-procedi" href="https://apps.docusign.com/send/templates?view=shared" target="_blank">Procedi</a>
             <button id="check-btn" class="btn-check">Check</button>
           </div>
-          <div id="loading-spinner" style="display:none; margin-top: 20px;">
+
+          <div id="loading-spinner" style="display: none; margin-top: 20px;">
             <div class="spinner"></div>
-            <div id="countdown" style="text-align: center; font-size: 14px; color: var(--muted); margin-top: 10px;"></div>
+            <div id="countdown" class="countdown-text"></div>
           </div>
         </div>
 
         <div id="dettaglio-panel" style="display: none;">
-          <div class="result-group"><label>Canone Mensile Promozionale</label><span id="default-monthly-price">0 €</span></div>
-          <div class="result-group"><label>Setup Fee Promozionale</label><span id="setup-fee">0 €</span></div>
-          <div class="result-group"><label>Totale costi una tantum</label><span id="setup-total-promo">0 €</span></div>
+          <div class="result-group">
+            <label>Canone Mensile Promozionale</label>
+            <span id="default-monthly-price">€0</span>
+          </div>
+
+          <div class="result-group">
+            <label>Setup Fee Promozionale</label>
+            <span id="setup-fee">€0</span>
+          </div>
+
+          <div class="result-group">
+            <label>Totale costi una tantum</label>
+            <span id="setup-total-promo">€0</span>
+          </div>
         </div>
       </div>
     </section>
   </main>
+
   <script src="script.js" defer></script>
 </body>
 </html>
