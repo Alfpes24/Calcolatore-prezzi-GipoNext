@@ -1,7 +1,9 @@
-// ✅ Protezione accesso: sessionStorage + referrer
+// ✅ Protezione accesso con localStorage (funziona tra progetti GitHub Pages)
 (function protezioneAccesso() {
   const refOk = document.referrer.includes("alfpes24.github.io") || window.opener;
-  if (sessionStorage.getItem("autenticato") !== "true" || !refOk) {
+  const accessoConsentito = localStorage.getItem("accessoGipo") === "ok";
+
+  if (!accessoConsentito || !refOk) {
     document.body.innerHTML = "<h2 style='color: red; text-align: center;'>Accesso non autorizzato</h2>";
     setTimeout(() => location.replace("https://alfpes24.github.io/"), 1500);
   }
@@ -26,7 +28,6 @@ const prezzi = {
 const setup = [99, 119, 129, 149, 199, 299, 499, 899];
 const soglie = [1, 2, 4, 6, 8, 10, 15, 20];
 
-// 🔁 Trova l'indice corretto in base al numero di stanze
 function getIndiceStanze(stanze) {
   for (let i = 0; i < soglie.length; i++) {
     if (stanze <= soglie[i]) return i;
@@ -34,7 +35,7 @@ function getIndiceStanze(stanze) {
   return soglie.length - 1;
 }
 
-// ✅ Logica di calcolo e check
+// ✅ Eventi su caricamento pagina
 document.addEventListener("DOMContentLoaded", function () {
   const calculateBtn = document.getElementById("calculate-btn");
   const checkBtn = document.getElementById("check-btn");
@@ -63,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// 🧠 Funzione principale di calcolo preventivo
+// ✅ Calcolo preventivo
 function calcolaPreventivo() {
   const stanze = Math.floor(parseFloat(document.getElementById("rooms").value));
   const medici = Math.floor(parseFloat(document.getElementById("doctors").value));
@@ -93,7 +94,6 @@ function calcolaPreventivo() {
   const listinoMensile = canoneMensileBase * 1.25;
   const listinoSetup = setupFeeBase * 1.25;
 
-  // 📊 Mostra risultati
   document.getElementById("monthly-list-price").textContent = `${listinoMensile.toFixed(2)} €`;
   document.getElementById("setup-list-price").textContent = `${listinoSetup.toFixed(2)} €`;
   document.getElementById("default-monthly-price").textContent = `${canoneMensileBase.toFixed(2)} €`;
@@ -106,7 +106,7 @@ function calcolaPreventivo() {
   document.getElementById("loading-spinner").style.display = "none";
 }
 
-// ⚠️ Mostra errori in modo elegante
+// ✅ Messaggi di errore eleganti
 function mostraErrore(msg) {
   const div = document.createElement("div");
   div.style.color = "red";
