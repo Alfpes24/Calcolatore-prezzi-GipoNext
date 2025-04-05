@@ -1,9 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // 🔐 Protezione: consente l’accesso solo se passato dalla pagina protetta
+  if (!sessionStorage.getItem("accesso_consentito")) {
+    window.location.href = "https://alfpes24.github.io/Accesso-calcolatori/";
+    return;
+  }
+
   const calculateBtn = document.getElementById("calculate-btn");
   const results = document.getElementById("results");
   const listinoPanel = document.getElementById("listino-panel");
   const dettaglioPanel = document.getElementById("dettaglio-panel");
   const spinner = document.getElementById("loading-spinner");
+  const countdown = document.getElementById("countdown");
 
   calculateBtn.addEventListener("click", () => {
     const rooms = parseInt(document.getElementById("rooms").value) || 0;
@@ -13,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const tablet = document.getElementById("tabletFirma").checked;
     const ts = document.getElementById("lettoreTessera").checked;
 
-    // Fasce base
+    // Logica bundle mensile
     let baseMonthly = 0;
     if (bundle === "starter") baseMonthly = 149;
     if (bundle === "plus") baseMonthly = 189;
@@ -23,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const ratio = doctors / rooms;
     if (ratio <= 1.3) baseMonthly -= 10;
 
-    // Setup base
+    // Logica setup
     let setupFee = 0;
     if (rooms <= 2) setupFee = 290;
     else if (rooms <= 4) setupFee = 390;
@@ -33,11 +40,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (tablet) setupFee += 429;
     if (ts) setupFee += 79;
 
-    // Prezzi listino
+    // Prezzo a listino
     const listino = Math.round(baseMonthly * 1.25);
     const setupListino = Math.round(setupFee * 1.25);
 
-    // Aggiorna DOM
+    // Mostra listino
     document.getElementById("monthly-list-price").textContent = `€${listino}`;
     document.getElementById("setup-list-price").textContent = `€${setupListino}`;
     document.getElementById("setup-total").textContent = `€${setupListino}`;
@@ -50,10 +57,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("check-btn").addEventListener("click", () => {
     spinner.style.display = "block";
-    document.getElementById("countdown").textContent = "Verifica in corso...";
+    let seconds = 15;
+    countdown.textContent = `Verifica in corso... Attendere ${seconds} secondi`;
+
+    const interval = setInterval(() => {
+      seconds--;
+      countdown.textContent = `Verifica in corso... Attendere ${seconds} secondi`;
+    }, 1000);
 
     setTimeout(() => {
+      clearInterval(interval);
       spinner.style.display = "none";
+      countdown.textContent = "";
+
       const monthly = parseInt(document.getElementById("monthly-list-price").textContent.replace("€", ""));
       const setup = parseInt(document.getElementById("setup-list-price").textContent.replace("€", ""));
 
@@ -65,6 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("setup-total-promo").textContent = `€${promoSetup}`;
 
       dettaglioPanel.style.display = "block";
-    }, 3000);
+    }, 15000);
   });
 });
