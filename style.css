@@ -39,23 +39,16 @@ h1, h2 {
 }
 
 h1 {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 
-h2.highlight {
-  color: var(--primary-dark);
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
-p.subtitle {
+.subtitle {
   text-align: center;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--muted);
-  margin-bottom: 20px;
 }
 
 .card {
@@ -66,9 +59,76 @@ p.subtitle {
   border: 1px solid var(--border);
 }
 
-.info-box p {
+.form-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+input,
+select {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   font-size: 15px;
-  margin-bottom: 4px;
+  background-color: #f9fafb;
+}
+
+.checkbox {
+  flex-direction: row;
+  align-items: center;
+}
+
+.checkbox input {
+  margin-right: 10px;
+  width: 16px;
+  height: 16px;
+}
+
+.btn-primary,
+.btn-outline {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: var(--radius);
+  margin-top: 20px;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+}
+
+.btn-outline {
+  background: white;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+.btn-outline:hover {
+  background: var(--primary);
+  color: white;
 }
 
 .price-row {
@@ -107,46 +167,17 @@ p.subtitle {
   color: var(--danger);
 }
 
-.btn-primary,
-.btn-outline {
-  display: block;
+.full {
   width: 100%;
-  padding: 14px;
-  font-weight: bold;
-  font-size: 16px;
   text-align: center;
-  text-decoration: none;
-  border-radius: var(--radius);
   margin-top: 20px;
-  transition: background-color 0.2s ease;
-}
-
-.btn-primary {
-  background: var(--primary);
-  color: white;
-  border: none;
-}
-
-.btn-primary:hover {
-  background: var(--primary-dark);
-}
-
-.btn-outline {
-  background: white;
-  border: 2px solid var(--primary);
-  color: var(--primary);
-}
-
-.btn-outline:hover {
-  background: var(--primary);
-  color: white;
 }
 
 .hidden {
   display: none !important;
 }
 
-/* Linea ECG animata (finta) */
+/* Animazione ECG o linea verifica */
 .line-ecg {
   margin: 20px auto;
   width: 100%;
@@ -162,10 +193,8 @@ p.subtitle {
   border-radius: var(--radius);
   font-size: 14px;
   font-weight: bold;
-  margin-bottom: 16px;
+  margin: 12px auto;
   width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .verifica-msg {
