@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Preventivo GIPO | MioDottore</title>
 
-  <!-- Protezione accesso con localStorage -->
+  <!-- Protezione accesso -->
   <script>
     const refOk = document.referrer.includes("alfpes24.github.io") || window.opener;
     const accesso = localStorage.getItem("accessoGipo") === "ok";
@@ -19,11 +19,11 @@
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 </head>
-<body>
 
+<body>
   <main class="layout">
 
-    <!-- Sezione promozionale -->
+    <!-- Sezione promo -->
     <section class="promo-section">
       <h1>Il gestionale perfetto per la tua struttura</h1>
       <p class="description">
@@ -83,44 +83,51 @@
 
       <!-- Sezione risultati -->
       <div id="results" class="results" style="display: none;">
-        
+
         <!-- Pannello Listino -->
         <div id="listino-panel">
           <div class="result-group">
-            <label>Canone Mensile</label>
+            <label>Canone Mensile a Listino (+25%)</label>
             <span id="monthly-list-price">0 €</span>
           </div>
+
           <div class="result-group">
-            <label>Setup Fee</label>
+            <label>Setup Fee a Listino (+25%)</label>
             <span id="setup-list-price">0 €</span>
           </div>
+
           <div class="result-group">
-  <label>Totale costi (Setup fee + Tablet + Ts)</label>
-  <span id="totale-costi">0 €</span>
-</div>
-          <div class="result-group">
-            <label>Totale costi una tantum</label>
-            <span id="setup-total">0 €</span>
+            <label>Totale costi (Setup + Tablet + TS)</label>
+            <span id="totale-costi">0 €</span>
           </div>
+
           <div class="result-group check-buttons">
             <a class="btn-procedi" href="https://apps.docusign.com/send/templates?view=shared" target="_blank">Procedi</a>
             <button id="check-btn" class="btn-check">Check</button>
           </div>
+
+          <!-- Spinner + countdown -->
           <div id="loading-spinner" style="display:none; margin-top: 20px;">
             <div class="spinner"></div>
             <div id="countdown" style="text-align: center; font-size: 14px; color: var(--muted); margin-top: 10px;"></div>
           </div>
         </div>
 
-        <!-- Pannello dettagli -->
+        <!-- Pannello dettagli dopo "Check" -->
         <div id="dettaglio-panel" style="display: none;">
           <div class="result-group">
             <label>Canone Mensile Promozionale</label>
             <span id="default-monthly-price">0 €</span>
           </div>
+
           <div class="result-group">
             <label>Setup Fee Promozionale</label>
             <span id="setup-fee">0 €</span>
+          </div>
+
+          <div class="result-group">
+            <label>Totale costi una tantum</label>
+            <span id="setup-total">0 €</span>
           </div>
         </div>
 
@@ -128,7 +135,6 @@
     </section>
   </main>
 
-  <!-- Script -->
   <script src="script.js" defer></script>
 </body>
 </html>
