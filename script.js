@@ -39,12 +39,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // === CALCOLO PREVENTIVO
 function calcolaPreventivo() {
-  const stanze = parseInt(document.getElementById("rooms").value);
-  const medici = parseInt(document.getElementById("doctors").value);
-  const bundle = document.getElementById("bundle").value;
-  const crm = document.getElementById("crm").checked;
-  const tablet = document.getElementById("tabletFirma").checked;
-  const lettore = document.getElementById("lettoreTessera").checked;
+  const stanze = parseInt(document.getElementById("rooms")?.value || 3);
+  const medici = parseInt(document.getElementById("doctors")?.value || 5);
+  const bundle = document.getElementById("bundle")?.value || 'plus';
+  const crm = document.getElementById("crm")?.checked;
+  const tablet = document.getElementById("tabletFirma")?.checked;
+  const lettore = document.getElementById("lettoreTessera")?.checked;
 
   if (isNaN(stanze) || isNaN(medici) || stanze <= 0) {
     alert("Inserisci un numero valido di ambulatori e medici.");
@@ -54,7 +54,6 @@ function calcolaPreventivo() {
   const idx = getIndiceStanze(stanze);
   let prezzoUnitario = prezzi[bundle][crm ? "crm" : "solo"][idx];
 
-  // Ricalcolo per rapporto dottori/stanze
   if ((medici / stanze) <= 1.3) {
     prezzoUnitario = prezzoUnitario / 1.5;
   }
@@ -73,32 +72,30 @@ function calcolaPreventivo() {
   document.getElementById("setup-list-price").textContent = `${setupListino.toFixed(2)} €`;
   document.getElementById("setup-total").textContent = `${totaleListino.toFixed(2)} €`;
 
-  // Mostra sezione risultati
-  document.getElementById("results").classList.remove("hidden");
-  document.getElementById("dettaglio-panel").classList.add("hidden");
+  // Mostra i blocchi corretti
   document.getElementById("loading-spinner").classList.add("hidden");
+  document.getElementById("dettaglio-panel").classList.add("hidden");
+  document.getElementById("results")?.classList.remove("hidden");
 }
 
 // === VERIFICA PROMOZIONE
 function startPromoCheck() {
   const spinner = document.getElementById("loading-spinner");
-  const countdown = document.getElementById("countdown");
   const promoPanel = document.getElementById("dettaglio-panel");
 
   spinner.classList.remove("hidden");
-  countdown.textContent = "Attendere 15 secondi...";
+  promoPanel.classList.add("hidden");
+
   let seconds = 15;
-
   const interval = setInterval(() => {
-    countdown.textContent = `Attendere ${seconds} secondi...`;
     seconds--;
-
     if (seconds < 0) {
       clearInterval(interval);
+
+      // Nascondi loading, mostra offerta
       spinner.classList.add("hidden");
       promoPanel.classList.remove("hidden");
 
-      // Prezzi promo = base
       const totalePromo = setupFeeBase + tabletCosto + lettoreCosto;
 
       document.getElementById("default-monthly-price").textContent = `${canoneMensileBase.toFixed(2)} €`;
