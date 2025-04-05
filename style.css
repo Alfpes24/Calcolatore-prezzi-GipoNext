@@ -1,4 +1,4 @@
-/* RESET BASE */
+/* === RESET & BASE === */
 body {
   margin: 0;
   padding: 0;
@@ -7,172 +7,202 @@ body {
   color: #2c3e50;
 }
 
-.container {
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 20px;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+h1, h2, h3 {
+  font-weight: 600;
 }
 
-/* LOGO */
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 18px;
-  font-weight: bold;
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.05);
+}
+
+/* === PROMO SECTION === */
+.promo-section {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.promo-section h1 {
+  font-size: 24px;
+  color: #009ca6;
   margin-bottom: 10px;
 }
 
-.logo-icon {
-  background-color: #009ca6;
-  color: #fff;
-  border-radius: 50%;
-  padding: 6px 12px;
-}
-
-.logo-text {
-  color: #2c3e50;
-}
-
-/* HEADER */
-.header h1 {
-  font-size: 20px;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #009ca6;
-}
-
-.intro {
-  font-size: 14px;
-  margin: 12px 0 24px;
+.promo-section .description {
   color: #555;
-}
-
-/* FORM CONFIGURATORE */
-.form-group {
+  font-size: 15px;
   margin-bottom: 20px;
 }
 
-label {
-  font-weight: 500;
-  margin-bottom: 6px;
-  display: block;
-  font-size: 15px;
+.promo-btn {
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: #009ca6;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s ease;
 }
 
-input[type="number"], select {
+.promo-btn:hover {
+  background-color: #007d89;
+}
+
+.trusted-doctors {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.trusted-doctors img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.promo-text {
+  margin-left: 12px;
+  text-align: left;
+  font-size: 13px;
+  color: #007c91;
+}
+
+/* === FORM SECTION === */
+.form-section {
+  margin-top: 20px;
+}
+
+.form-section h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 6px;
+}
+
+input[type="number"],
+select {
   width: 100%;
-  padding: 10px 12px;
+  padding: 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 14px;
+  box-sizing: border-box;
 }
 
-.checkbox-group label {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 14px;
-}
-
-/* BUTTONS */
-button {
-  font-size: 15px;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
+input[type="checkbox"] {
+  margin-right: 8px;
 }
 
 .btn-primary {
   background-color: #009ca6;
   color: white;
+  padding: 12px 20px;
+  font-size: 16px;
   font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 12px;
+  transition: background 0.3s ease;
 }
 
 .btn-primary:hover {
   background-color: #007d89;
 }
 
-/* SEZIONE OFFERTA */
-.sconto-panel {
-  text-align: center;
-  margin-top: 40px;
-}
-
-.titolo-sezione {
-  color: #007c91;
-  font-size: 18px;
-  letter-spacing: 1px;
-  font-weight: 700;
-  margin-bottom: 20px;
-}
-
-.card-offerta {
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
-}
-
-.etichetta {
-  font-size: 16px;
-  color: #004d5c;
-  font-weight: 500;
-  margin-bottom: 5px;
-}
-
-.prezzo-listino {
-  font-size: 40px;
-  font-weight: 700;
-  color: #007c91;
-  margin-bottom: 20px;
-}
-
-.offerta-box {
-  background-color: #009ca6;
-  color: white;
-  padding: 10px 0;
+/* === RISULTATI === */
+.results {
+  margin-top: 30px;
+  background: #eafafa;
+  border: 2px solid #b2ebf2;
   border-radius: 12px;
-  margin-bottom: 20px;
+  padding: 20px;
 }
 
-.etichetta-offerta {
+.result-group {
+  margin-bottom: 16px;
+}
+
+.result-group label {
+  display: block;
   font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-.prezzo-offerta {
-  font-size: 32px;
-  font-weight: 700;
-  margin: 5px 0 10px;
-}
-
-/* LOADER PROMO */
-.promo-loader {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  font-size: 14px;
+  font-weight: 600;
   color: #004d5c;
-  margin-top: 16px;
+  margin-bottom: 4px;
 }
 
-.spinner-mini {
-  width: 18px;
-  height: 18px;
-  border: 3px solid #d0e7ea;
+.result-group span {
+  font-size: 18px;
+  color: #006064;
+  font-weight: bold;
+}
+
+/* === BOTTONI RISULTATO === */
+.check-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-procedi,
+.btn-check {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.btn-procedi {
+  background-color: #eeeeee;
+  color: #333;
+}
+
+.btn-check {
+  background-color: #007c91;
+  color: white;
+}
+
+.btn-check:hover {
+  background-color: #006478;
+}
+
+/* === LOADING / COUNTDOWN === */
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 4px solid #cceff3;
   border-top-color: #009ca6;
   border-radius: 50%;
   animation: spin 1s linear infinite;
+  margin: 0 auto;
 }
 
 @keyframes spin {
@@ -181,36 +211,9 @@ button {
   }
 }
 
-/* BOTTONE FIRMA */
-.firma-box {
-  margin-top: 30px;
-}
-
-.firma-btn {
-  background-color: #007c91;
-  color: white;
-  padding: 14px 24px;
-  font-size: 18px;
-  font-weight: 600;
-  border-radius: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: none;
-  width: 100%;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.firma-btn:hover {
-  background-color: #006d7a;
-}
-
-.firma-logo {
-  font-family: Arial, sans-serif;
-  font-weight: 600;
-  font-size: 18px;
-  background: url('https://seeklogo.com/images/D/docusign-logo-7B1F3A1A4F-seeklogo.com.png') no-repeat left center;
-  background-size: 18px;
-  padding-left: 24px;
+.countdown-text {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 8px;
+  color: #555;
 }
