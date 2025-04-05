@@ -85,12 +85,17 @@ function startPromoCheck() {
   const spinner = document.getElementById("loading-spinner");
   const promoPanel = document.getElementById("dettaglio-panel");
   const countdown = document.getElementById("countdown");
+  const checkBtn = document.getElementById("check-btn");
 
+  // Mostra spinner ECG
   spinner.classList.remove("hidden");
   promoPanel.classList.add("hidden");
 
   // 🔽 Scroll automatico verso ECG
   spinner.scrollIntoView({ behavior: "smooth" });
+
+  // Disabilita pulsante verifica
+  checkBtn.disabled = true;
 
   let seconds = 15;
   countdown.textContent = `Attendere ${seconds} secondi…`;
@@ -104,6 +109,10 @@ function startPromoCheck() {
       spinner.classList.add("hidden");
       promoPanel.classList.remove("hidden");
 
+      // Sblocca pulsante per eventuali riutilizzi
+      checkBtn.disabled = false;
+
+      // Calcoli offerta reale
       const setupTotalePromo = setupFeeBase + tabletCosto + lettoreCosto;
       const canoneListino = canoneMensileBase * 1.25;
       const setupListino = setupFeeBase * 1.25;
@@ -114,7 +123,7 @@ function startPromoCheck() {
       document.getElementById("list-monthly-crossed").textContent = `${canoneListino.toFixed(2)} €`;
       document.getElementById("list-setup-crossed").textContent = `${setupListino.toFixed(2)} €`;
 
-      // Scroll finale verso offerta
+      // 🔽 Scroll verso offerta
       promoPanel.scrollIntoView({ behavior: "smooth" });
     }
   }, 1000);
