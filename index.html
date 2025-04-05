@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
+  <script>
+  if (sessionStorage.getItem("autenticato") !== "true") {
+    // Non autenticato → torna alla pagina principale
+    window.location.href = "https://alfpes24.github.io/";
+  }
+</script>  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Preventivo GIPO | MioDottore</title>
   <link rel="stylesheet" href="style.css" />
