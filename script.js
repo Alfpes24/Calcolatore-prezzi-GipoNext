@@ -88,8 +88,8 @@ function calcolaPreventivo() {
   const setupFeeBase = setup[idx];
 
   const setupPromozionaleConMargine = setupFeeBase * 1.25;
-  const tabletConMargine = tablet ? 429 * 1.15 : 0;
-  const lettoreConMargine = lettore ? 79 * 1.15 : 0;
+  const tabletConMargine = tablet ? 429 : 0;
+  const lettoreConMargine = lettore ? 79 : 0;
   const setupTotale = setupPromozionaleConMargine + tabletConMargine + lettoreConMargine;
 
   const listinoMensile = canoneMensileBase * 1.25;
