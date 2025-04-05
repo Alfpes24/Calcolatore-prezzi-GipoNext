@@ -2,7 +2,6 @@
 (function protezioneAccesso() {
   const refOk = document.referrer.includes("alfpes24.github.io") || window.opener;
   const accessoConsentito = localStorage.getItem("accessoGipo") === "ok";
-
   if (!accessoConsentito || !refOk) {
     document.body.innerHTML = "<h2 style='color: red; text-align: center;'>Accesso non autorizzato</h2>";
     setTimeout(() => location.replace("https://alfpes24.github.io/"), 1500);
@@ -87,9 +86,11 @@ function calcolaPreventivo() {
 
   const canoneMensileBase = prezzoUnitario * stanze;
   const setupFeeBase = setup[idx];
-  const tabletCosto = tablet ? 429 : 0;
-  const lettoreCosto = lettore ? 79 : 0;
-  const setupTotale = setupFeeBase + tabletCosto + lettoreCosto;
+
+  const setupPromozionaleConMargine = setupFeeBase * 1.25;
+  const tabletConMargine = tablet ? 429 * 1.15 : 0;
+  const lettoreConMargine = lettore ? 79 * 1.15 : 0;
+  const setupTotale = setupPromozionaleConMargine + tabletConMargine + lettoreConMargine;
 
   const listinoMensile = canoneMensileBase * 1.25;
   const listinoSetup = setupFeeBase * 1.25;
