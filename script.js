@@ -31,13 +31,13 @@ function getIndiceStanze(stanze) {
   return soglie.length - 1;
 }
 
-// === AVVIO
+// === INIZIALIZZAZIONE EVENTI
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("calculate-btn").addEventListener("click", calcolaPreventivo);
   document.getElementById("check-btn").addEventListener("click", startPromoCheck);
 });
 
-// === CALCOLO PREVENTIVO
+// === CALCOLO PREZZI A LISTINO
 function calcolaPreventivo() {
   const stanze = parseInt(document.getElementById("rooms").value);
   const medici = parseInt(document.getElementById("doctors").value);
@@ -77,26 +77,30 @@ function calcolaPreventivo() {
   document.getElementById("dettaglio-panel").classList.add("hidden");
 }
 
-// === VERIFICA PROMOZIONE
+// === VERIFICA OFFERTA RISERVATA CON COUNTDOWN
 function startPromoCheck() {
   const spinner = document.getElementById("loading-spinner");
   const promoPanel = document.getElementById("dettaglio-panel");
+  const countdown = document.getElementById("countdown");
 
   spinner.classList.remove("hidden");
   promoPanel.classList.add("hidden");
 
   let seconds = 15;
+  countdown.textContent = `Attendere ${seconds} secondi…`;
+
   const interval = setInterval(() => {
     seconds--;
+    countdown.textContent = `Attendere ${seconds} secondi…`;
 
-    if (seconds < 0) {
+    if (seconds <= 0) {
       clearInterval(interval);
       spinner.classList.add("hidden");
       promoPanel.classList.remove("hidden");
 
       const totalePromo = setupFeeBase + tabletCosto + lettoreCosto;
 
-      // Offerta riservata
+      // Prezzi promozionali
       document.getElementById("default-monthly-price").textContent = `${canoneMensileBase.toFixed(2)} €`;
       document.getElementById("setup-fee").textContent = `${setupFeeBase.toFixed(2)} €`;
       document.getElementById("setup-total-promo").textContent = `${totalePromo.toFixed(2)} €`;
