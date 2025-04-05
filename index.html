@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Preventivo GIPO | MioDottore</title>
 
-  <!-- Protezione accesso -->
   <script>
     const refOk = document.referrer.includes("alfpes24.github.io") || window.opener;
     const accesso = localStorage.getItem("accessoGipo") === "ok";
@@ -15,7 +14,6 @@
     }
   </script>
 
-  <!-- Stili -->
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 </head>
@@ -23,7 +21,7 @@
 <body>
   <main class="layout">
 
-    <!-- Sezione promo -->
+    <!-- Promo -->
     <section class="promo-section">
       <h1>Il gestionale perfetto per la tua struttura</h1>
       <p class="description">
@@ -42,7 +40,7 @@
       </div>
     </section>
 
-    <!-- Sezione calcolo -->
+    <!-- Form -->
     <section class="form-section">
       <h2>Calcola il canone mensile di GipoNext</h2>
 
@@ -81,10 +79,10 @@
         <button type="button" id="calculate-btn">Calcola</button>
       </form>
 
-      <!-- Sezione risultati -->
+      <!-- Risultati -->
       <div id="results" class="results" style="display: none;">
 
-        <!-- Pannello Listino -->
+        <!-- Listino (dopo Calcola) -->
         <div id="listino-panel">
           <div class="result-group">
             <label>Canone Mensile a Listino (+25%)</label>
@@ -97,8 +95,8 @@
           </div>
 
           <div class="result-group">
-            <label>Totale costi (Setup + Tablet + TS)</label>
-            <span id="totale-costi">0 €</span>
+            <label>Totale costi una tantum</label>
+            <span id="setup-total">0 €</span>
           </div>
 
           <div class="result-group check-buttons">
@@ -106,14 +104,13 @@
             <button id="check-btn" class="btn-check">Check</button>
           </div>
 
-          <!-- Spinner + countdown -->
           <div id="loading-spinner" style="display:none; margin-top: 20px;">
             <div class="spinner"></div>
             <div id="countdown" style="text-align: center; font-size: 14px; color: var(--muted); margin-top: 10px;"></div>
           </div>
         </div>
 
-        <!-- Pannello dettagli dopo "Check" -->
+        <!-- Dettagli (dopo Check) -->
         <div id="dettaglio-panel" style="display: none;">
           <div class="result-group">
             <label>Canone Mensile Promozionale</label>
@@ -127,7 +124,7 @@
 
           <div class="result-group">
             <label>Totale costi una tantum</label>
-            <span id="setup-total">0 €</span>
+            <span id="setup-total-promo">0 €</span>
           </div>
         </div>
 
