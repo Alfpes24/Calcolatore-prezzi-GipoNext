@@ -182,7 +182,7 @@ select {
   margin: 20px auto;
   width: 100%;
   height: 50px;
-  background: url('https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif') center/contain no-repeat;
+  background: url('https://cainvas-static.s3.amazonaws.com/media/user_data/cainvas-admin/heart.zip') center/contain no-repeat;
 }
 
 .badge {
