@@ -6,8 +6,6 @@
   <title>GipoNext - Preventivo</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-
-  <!-- Accesso riservato -->
   <script>
     const refOk = document.referrer.includes("alfpes24.github.io") || window.opener;
     const accesso = localStorage.getItem("accesso_consentito") === "ok";
@@ -17,15 +15,14 @@
     }
   </script>
 </head>
-
 <body>
 
-  <!-- Layout colonne -->
+  <!-- Layout affiancato -->
   <div class="layout-container">
 
-    <!-- Presentazione Gipo -->
+    <!-- Presentazione -->
     <section class="presentation">
-      <img src="https://www.giponext.it/Images/logo-gipo-next-primary-tagline.svg" class="logo" alt="Logo GipoNext" />
+      <img src="https://www.giponext.it/Images/logo-gipo-next-primary-tagline.svg" class="logo" alt="GipoNext logo" />
       <h1>Il gestionale per ambulatori<br>più evoluto in Italia</h1>
       <p class="lead">Digitalizza la tua struttura sanitaria con uno strumento completo, sicuro e facile da usare.</p>
       <ul class="features">
@@ -78,7 +75,7 @@
     </section>
   </div>
 
-  <!-- Risultati a listino -->
+  <!-- Listino base -->
   <section id="listino-panel" class="card hidden">
     <h2>Risultato a listino</h2>
     <div class="price-row"><span>Canone mensile</span><strong id="monthly-list-price">-- €</strong></div>
@@ -87,16 +84,30 @@
     <button id="check-btn" class="btn-outline">Verifica condizioni riservate</button>
   </section>
 
-  <!-- Verifica promozione (ECG + countdown) -->
+  <!-- Verifica con ECG animato -->
   <section id="loading-spinner" class="card hidden">
     <h2>Sto verificando<br />se ci sono condizioni riservate…</h2>
 
-    <!-- ECG animato -->
     <div class="ecg-container">
-      <div class="ecg-line"></div>
+      <svg class="ecg-wave" viewBox="0 0 1000 100" xmlns="http://www.w3.org/2000/svg">
+        <g>
+          <polyline class="ecg-path" fill="none" stroke="#009ca6" stroke-width="2"
+            points="
+              0,50 20,50 25,30 30,50 35,50 40,70 45,50 60,50 70,40 75,50 
+              100,50 120,50 125,30 130,50 135,50 140,70 145,50 160,50 170,40 175,50
+              200,50 220,50 225,30 230,50 235,50 240,70 245,50 260,50 270,40 275,50
+              300,50 320,50 325,30 330,50 335,50 340,70 345,50 360,50 370,40 375,50
+              400,50 420,50 425,30 430,50 435,50 440,70 445,50 460,50 470,40 475,50
+              500,50 520,50 525,30 530,50 535,50 540,70 545,50 560,50 570,40 575,50
+              600,50 620,50 625,30 630,50 635,50 640,70 645,50 660,50 670,40 675,50
+              700,50 720,50 725,30 730,50 735,50 740,70 745,50 760,50 770,40 775,50
+              800,50 820,50 825,30 830,50 835,50 840,70 845,50 860,50 870,40 875,50
+              900,50 920,50 925,30 930,50 935,50 940,70 945,50 960,50 970,40 975,50
+            " />
+        </g>
+      </svg>
     </div>
 
-    <!-- Countdown -->
     <p class="verifica-msg">
       <span class="loader-icon">⏳</span>
       <span id="countdown">Attendere 15 secondi…</span>
@@ -107,7 +118,6 @@
   <section id="dettaglio-panel" class="card hidden">
     <h2 class="highlight">Ottime notizie!</h2>
     <p class="subtitle">È disponibile un’offerta riservata per la tua configurazione.</p>
-
     <div class="price-row">
       <span>Canone mensile</span>
       <div>
@@ -115,7 +125,6 @@
         <span class="crossed" id="list-monthly-crossed">-- €</span>
       </div>
     </div>
-
     <div class="price-row">
       <span>Setup una tantum</span>
       <div>
@@ -123,17 +132,14 @@
         <span class="crossed" id="list-setup-crossed">-- €</span>
       </div>
     </div>
-
     <div class="price-row">
       <span>Bonus incluso</span>
       <strong class="bonus">1 mese omaggio + supporto marketing</strong>
     </div>
-
     <div class="price-row">
       <span>⏱️ Valida ancora per</span>
       <strong class="timer">2 h 38 min</strong>
     </div>
-
     <a href="https://apps.docusign.com/send/templates?view=shared" target="_blank" class="btn-primary full">
       Blocca ora e firma con DocuSign
     </a>
