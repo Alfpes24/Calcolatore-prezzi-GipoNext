@@ -26,9 +26,10 @@ body {
   padding: 24px;
 }
 
+/* Layout a due colonne fisse */
 .layout-container {
   display: flex;
-  flex-wrap: nowrap; /* Forza affiancamento fisso */
+  flex-wrap: nowrap;
   justify-content: space-between;
   align-items: stretch;
   gap: 40px;
@@ -37,14 +38,14 @@ body {
 }
 
 .presentation {
-  flex: 0 0 50%;
-  max-width: 50%;
+  flex: 0 0 30%;
+  max-width: 30%;
   overflow: hidden;
 }
 
 .form-box {
-  flex: 0 0 50%;
-  max-width: 50%;
+  flex: 0 0 70%;
+  max-width: 70%;
   background: white;
   padding: 24px;
   border-radius: var(--radius);
@@ -52,7 +53,7 @@ body {
   border: 1px solid var(--border);
 }
 
-/* Impedisce che immagini o elementi nella colonna sinistra allunghino la pagina */
+/* Impedisce che contenuti larghi allunghino il layout */
 .presentation img,
 .presentation iframe,
 .presentation div {
@@ -146,6 +147,7 @@ select:focus {
   height: 16px;
 }
 
+/* Pulsanti */
 .btn-primary,
 .btn-outline {
   display: block;
@@ -229,32 +231,35 @@ select:focus {
   display: none !important;
 }
 
-/* ECG */
+/* ECG animato */
 .ecg-container {
   width: 100%;
   max-width: 500px;
   height: 60px;
   margin: 20px auto;
   overflow: hidden;
+  position: relative;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
 }
 
-.ecg-wave {
-  width: 100%;
+.ecg-line {
+  width: 200%;
   height: 100%;
-}
-.ecg-animation {
-  animation: ecg-scroll 2s linear infinite;
+  background: url('https://upload.wikimedia.org/wikipedia/commons/f/f0/ECG_grid.svg') repeat-x;
+  background-size: contain;
+  animation: ecg-move 2s linear infinite;
 }
 
-@keyframes ecg-scroll {
-  from {
+@keyframes ecg-move {
+  0% {
     transform: translateX(0);
   }
-  to {
-    transform: translateX(-100px); /* regola la distanza per simulare il movimento */
+  100% {
+    transform: translateX(-50%);
   }
 }
-
 
 .verifica-msg {
   font-size: 16px;
@@ -267,4 +272,4 @@ select:focus {
   margin-right: 6px;
 }
 
-/* ❌ Nessuna media query: layout fisso affiancato sempre */
+/* ❌ Layout fisso: nessuna media query per mobile */
