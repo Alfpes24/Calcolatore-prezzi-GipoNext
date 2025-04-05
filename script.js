@@ -67,7 +67,7 @@ function calcolaPreventivo() {
   const setupListino = setupFeeBase * 1.25;
   const totaleListino = setupListino + tabletCosto + lettoreCosto;
 
-  // Mostra sezione listino
+  // Mostra pannello listino
   document.getElementById("monthly-list-price").textContent = `${canoneListino.toFixed(2)} €`;
   document.getElementById("setup-list-price").textContent = `${setupListino.toFixed(2)} €`;
   document.getElementById("setup-total").textContent = `${totaleListino.toFixed(2)} €`;
@@ -75,6 +75,9 @@ function calcolaPreventivo() {
   document.getElementById("listino-panel").classList.remove("hidden");
   document.getElementById("loading-spinner").classList.add("hidden");
   document.getElementById("dettaglio-panel").classList.add("hidden");
+
+  // 🔽 Scroll automatico
+  document.getElementById("listino-panel").scrollIntoView({ behavior: "smooth" });
 }
 
 // === Verifica condizioni riservate ===
@@ -85,6 +88,9 @@ function startPromoCheck() {
 
   spinner.classList.remove("hidden");
   promoPanel.classList.add("hidden");
+
+  // 🔽 Scroll automatico verso ECG
+  spinner.scrollIntoView({ behavior: "smooth" });
 
   let seconds = 15;
   countdown.textContent = `Attendere ${seconds} secondi…`;
@@ -98,7 +104,6 @@ function startPromoCheck() {
       spinner.classList.add("hidden");
       promoPanel.classList.remove("hidden");
 
-      // Prezzi reali
       const setupTotalePromo = setupFeeBase + tabletCosto + lettoreCosto;
       const canoneListino = canoneMensileBase * 1.25;
       const setupListino = setupFeeBase * 1.25;
@@ -108,6 +113,9 @@ function startPromoCheck() {
 
       document.getElementById("list-monthly-crossed").textContent = `${canoneListino.toFixed(2)} €`;
       document.getElementById("list-setup-crossed").textContent = `${setupListino.toFixed(2)} €`;
+
+      // Scroll finale verso offerta
+      promoPanel.scrollIntoView({ behavior: "smooth" });
     }
   }, 1000);
 }
