@@ -26,15 +26,15 @@ body {
   padding: 24px;
 }
 
-/* Layout due colonne */
+/* Layout a due colonne */
 .layout-container {
   display: flex;
-  gap: 40px;
-  align-items: stretch;
+  flex-wrap: wrap;
   justify-content: space-between;
+  align-items: stretch;
+  gap: 40px;
   max-width: 1200px;
   margin: 0 auto 40px auto;
-  flex-wrap: wrap;
 }
 
 .presentation,
@@ -43,7 +43,7 @@ body {
   max-width: 50%;
 }
 
-/* Presentazione */
+/* Sezione Presentazione */
 .logo {
   width: 160px;
   margin-bottom: 20px;
@@ -52,8 +52,8 @@ body {
 .presentation h1 {
   font-size: 26px;
   color: var(--primary);
-  margin-bottom: 10px;
   font-weight: 700;
+  margin-bottom: 10px;
 }
 
 .lead {
@@ -64,7 +64,6 @@ body {
 
 .features {
   list-style: none;
-  padding-left: 0;
   margin-bottom: 20px;
 }
 
@@ -110,7 +109,8 @@ label {
   display: block;
 }
 
-input, select {
+input,
+select {
   width: 100%;
   padding: 10px;
   font-size: 14px;
@@ -119,7 +119,8 @@ input, select {
   background: #f9fafb;
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus {
   border-color: var(--primary);
   outline: none;
 }
@@ -135,6 +136,7 @@ input:focus, select:focus {
   height: 16px;
 }
 
+/* Pulsanti */
 .btn-primary,
 .btn-outline {
   display: block;
@@ -146,8 +148,8 @@ input:focus, select:focus {
   text-decoration: none;
   border-radius: var(--radius);
   margin-top: 20px;
-  transition: background-color 0.2s ease;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .btn-primary {
@@ -171,6 +173,7 @@ input:focus, select:focus {
   color: white;
 }
 
+/* Card */
 .card {
   background: white;
   border-radius: var(--radius);
@@ -217,7 +220,7 @@ input:focus, select:focus {
   display: none !important;
 }
 
-/* ECG */
+/* Animazione ECG */
 .ecg-container {
   width: 100%;
   max-width: 500px;
