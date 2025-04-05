@@ -1,244 +1,216 @@
-:root {
-  --primary: #05c3a5;
-  --primary-hover: #049e87;
-  --secondary: #3b82f6;
-  --secondary-hover: #2563eb;
-  --background: #f9fafa;
-  --surface: #ffffff;
-  --text: #1f2937;
-  --muted: #6b7280;
-  --radius: 12px;
-  --shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-  --font: 'Inter', sans-serif;
-}
-
-* {
-  box-sizing: border-box;
-}
-
+/* RESET BASE */
 body {
   margin: 0;
-  font-family: var(--font);
-  background-color: var(--background);
-  color: var(--text);
-  line-height: 1.6;
+  padding: 0;
+  background-color: #f4f8fb;
+  font-family: 'Inter', sans-serif;
+  color: #2c3e50;
 }
 
-.layout {
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* LOGO */
+.logo {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 40px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 20px;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-/* PROMO SECTION */
-.promo-section {
-  flex: 1 1 480px;
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 40px;
-  box-shadow: var(--shadow);
+.logo-icon {
+  background-color: #009ca6;
+  color: #fff;
+  border-radius: 50%;
+  padding: 6px 12px;
 }
 
-.promo-section h1 {
-  font-size: 28px;
-  margin-bottom: 16px;
-  color: var(--primary);
+.logo-text {
+  color: #2c3e50;
 }
 
-.promo-section .description {
-  font-size: 16px;
-  color: var(--muted);
-  margin-bottom: 24px;
-}
-
-.promo-btn {
-  display: inline-block;
-  padding: 12px 20px;
-  font-weight: 600;
-  background: var(--secondary);
-  color: white;
-  border-radius: var(--radius);
-  text-decoration: none;
-  transition: background 0.3s ease;
-}
-
-.promo-btn:hover {
-  background: var(--secondary-hover);
-}
-
-.trusted-doctors {
+/* HEADER */
+.header h1 {
+  font-size: 20px;
+  margin: 0;
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 30px;
-  flex-wrap: wrap;
+  color: #009ca6;
 }
 
-.trusted-doctors img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: var(--shadow);
-}
-
-.trusted-doctors .promo-text {
+.intro {
   font-size: 14px;
-  color: var(--muted);
+  margin: 12px 0 24px;
+  color: #555;
 }
 
-/* FORM SECTION */
-.form-section {
-  flex: 1 1 480px;
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 40px;
-  box-shadow: var(--shadow);
-}
-
-.form-section h2 {
-  font-size: 24px;
-  margin-bottom: 24px;
-  color: var(--primary);
-}
-
+/* FORM CONFIGURATORE */
 .form-group {
   margin-bottom: 20px;
 }
 
-.form-group label {
-  display: block;
-  font-weight: 600;
+label {
+  font-weight: 500;
   margin-bottom: 6px;
-  font-size: 15px;
-}
-
-input, select {
-  width: 100%;
-  padding: 12px 14px;
-  font-size: 15px;
-  border: 1px solid #d1d5db;
-  border-radius: var(--radius);
-  background-color: #f8fafc;
-  transition: border 0.3s ease;
-}
-
-input:focus, select:focus {
-  border-color: var(--primary);
-  outline: none;
-  background-color: #ecfdf5;
-}
-
-button {
-  width: 100%;
-  padding: 14px;
-  font-weight: 600;
-  font-size: 16px;
-  background-color: var(--primary);
-  color: white;
-  border: none;
-  border-radius: var(--radius);
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: var(--primary-hover);
-}
-
-/* RISULTATI */
-.results {
-  margin-top: 30px;
-  padding: 24px;
-  background-color: #f0fdf4;
-  border: 1px solid #ccfbf1;
-  border-radius: var(--radius);
-}
-
-.result-group {
-  margin-bottom: 20px;
-}
-
-.result-group label {
-  font-size: 14px;
-  color: var(--muted);
-}
-
-.result-group span {
   display: block;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text);
+  font-size: 15px;
+}
+
+input[type="number"], select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.checkbox-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
 }
 
 /* BUTTONS */
-.check-buttons {
-  display: flex;
-  gap: 12px;
-  margin-top: 20px;
-}
-
-.btn-procedi {
-  padding: 10px 20px;
-  background-color: var(--secondary);
-  color: white;
-  font-weight: 600;
+button {
+  font-size: 15px;
+  padding: 12px;
   border-radius: 8px;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-}
-
-.btn-procedi:hover {
-  background-color: var(--secondary-hover);
-}
-
-.btn-check {
-  padding: 10px 20px;
-  background-color: #e2e8f0;
-  color: #1f2937;
   border: none;
-  border-radius: 8px;
-  font-weight: 600;
   cursor: pointer;
 }
 
-.btn-check:hover {
-  background-color: #cbd5e1;
+.btn-primary {
+  background-color: #009ca6;
+  color: white;
+  font-weight: 600;
+  width: 100%;
+  margin-top: 10px;
 }
 
-/* SPINNER */
-.spinner {
-  width: 30px;
-  height: 30px;
-  border: 4px solid #e5e7eb;
-  border-top: 4px solid var(--primary);
+.btn-primary:hover {
+  background-color: #007d89;
+}
+
+/* SEZIONE OFFERTA */
+.sconto-panel {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.titolo-sezione {
+  color: #007c91;
+  font-size: 18px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.card-offerta {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
+.etichetta {
+  font-size: 16px;
+  color: #004d5c;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.prezzo-listino {
+  font-size: 40px;
+  font-weight: 700;
+  color: #007c91;
+  margin-bottom: 20px;
+}
+
+.offerta-box {
+  background-color: #009ca6;
+  color: white;
+  padding: 10px 0;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.etichetta-offerta {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.prezzo-offerta {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 5px 0 10px;
+}
+
+/* LOADER PROMO */
+.promo-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #004d5c;
+  margin-top: 16px;
+}
+
+.spinner-mini {
+  width: 18px;
+  height: 18px;
+  border: 3px solid #d0e7ea;
+  border-top-color: #009ca6;
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  margin: 0 auto;
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .layout {
-    flex-direction: column;
-    gap: 20px;
-  }
+/* BOTTONE FIRMA */
+.firma-box {
+  margin-top: 30px;
+}
 
-  .promo-section,
-  .form-section {
-    padding: 30px 20px;
-  }
+.firma-btn {
+  background-color: #007c91;
+  color: white;
+  padding: 14px 24px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
 
-  .check-buttons {
-    flex-direction: column;
-    align-items: stretch;
-  }
+.firma-btn:hover {
+  background-color: #006d7a;
+}
+
+.firma-logo {
+  font-family: Arial, sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  background: url('https://seeklogo.com/images/D/docusign-logo-7B1F3A1A4F-seeklogo.com.png') no-repeat left center;
+  background-size: 18px;
+  padding-left: 24px;
 }
