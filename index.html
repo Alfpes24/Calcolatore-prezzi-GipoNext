@@ -91,16 +91,20 @@
   <section id="loading-spinner" class="card hidden">
     <h2>Sto verificando<br />se ci sono condizioni riservate…</h2>
     <div class="ecg-container">
-      <svg viewBox="0 0 500 100" preserveAspectRatio="none" class="ecg-wave">
-        <polyline fill="none" stroke="#009ca6" stroke-width="2"
-          points="0,50 20,50 25,30 30,50 35,50 40,70 45,50 60,50 70,40 75,50 500,50">
-          <animate attributeName="points" dur="1.5s" repeatCount="indefinite"
-            values="0,50 20,50 25,30 30,50 35,50 40,70 45,50 60,50 70,40 75,50 500,50;
-                    0,50 20,50 25,50 30,50 35,50 40,30 45,50 60,50 70,60 75,50 500,50;
-                    0,50 20,50 25,30 30,50 35,50 40,70 45,50 60,50 70,40 75,50 500,50" />
-        </polyline>
-      </svg>
-    </div>
+     <div class="ecg-container">
+  <svg class="ecg-wave" viewBox="0 0 500 100" preserveAspectRatio="none">
+    <g class="ecg-animation">
+      <polyline fill="none" stroke="#009ca6" stroke-width="2"
+        points="0,50 20,50 25,30 30,50 35,50 40,70 45,50 60,50 70,40 75,50 
+                100,50 120,50 125,30 130,50 135,50 140,70 145,50 160,50 170,40 175,50
+                200,50 220,50 225,30 230,50 235,50 240,70 245,50 260,50 270,40 275,50
+                300,50 320,50 325,30 330,50 335,50 340,70 345,50 360,50 370,40 375,50
+                400,50 420,50 425,30 430,50 435,50 440,70 445,50 460,50 470,40 475,50
+                500,50" />
+    </g>
+  </svg>
+</div>
+
     <p class="verifica-msg"><span class="loader-icon">⏳</span> <span id="countdown">Attendere 15 secondi…</span></p>
   </section>
 
