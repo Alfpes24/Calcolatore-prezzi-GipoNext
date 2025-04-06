@@ -17,10 +17,10 @@
 </head>
 <body>
 
-  <!-- Layout affiancato -->
+  <!-- Layout principale -->
   <div class="layout-container">
-
-    <!-- Presentazione -->
+    
+    <!-- Colonna sinistra: presentazione -->
     <section class="presentation">
       <img src="https://www.giponext.it/Images/logo-gipo-next-primary-tagline.svg" class="logo" alt="GipoNext logo" />
       <h1>Il gestionale per ambulatori<br>più evoluto in Italia</h1>
@@ -34,7 +34,7 @@
       <div class="badge">Scelto da oltre 4.000 strutture sanitarie</div>
     </section>
 
-    <!-- Form preventivo -->
+    <!-- Colonna destra: form preventivo -->
     <section class="form-box">
       <form id="calculator-form">
         <h2>Configura il tuo preventivo</h2>
@@ -75,7 +75,7 @@
     </section>
   </div>
 
-  <!-- Pannello listino -->
+  <!-- Prezzi a listino -->
   <section id="listino-panel" class="card hidden">
     <h2>Risultato a listino</h2>
     <div class="price-row"><span>Canone mensile</span><strong id="monthly-list-price">-- €</strong></div>
@@ -84,11 +84,10 @@
     <button id="check-btn" class="btn-outline">Verifica condizioni riservate</button>
   </section>
 
-  <!-- Pannello verifica promozione -->
+  <!-- Verifica promozione -->
   <section id="loading-spinner" class="card hidden">
     <h2>Sto verificando<br />se ci sono condizioni riservate…</h2>
-
-    <!-- ✅ Barra di caricamento -->
+    
     <div class="progress-container">
       <div class="progress-bar" id="progressBar"></div>
     </div>
