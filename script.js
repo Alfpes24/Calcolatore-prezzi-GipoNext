@@ -1,7 +1,8 @@
-// Riferimenti agli elementi
+// === Selettori ===
 const form = document.getElementById("calculator-form");
 const calculateBtn = document.getElementById("calculate-btn");
 const checkBtn = document.getElementById("check-btn");
+
 const listinoPanel = document.getElementById("listino-panel");
 const loadingPanel = document.getElementById("loading-spinner");
 const dettaglioPanel = document.getElementById("dettaglio-panel");
@@ -15,7 +16,7 @@ const listMonthlyCrossed = document.getElementById("list-monthly-crossed");
 const setupFee = document.getElementById("setup-fee");
 const listSetupCrossed = document.getElementById("list-setup-crossed");
 
-// Funzione di calcolo dei prezzi
+// === Calcolo prezzi ===
 function calculatePrices() {
   const rooms = parseInt(document.getElementById("rooms").value, 10);
   const doctors = parseInt(document.getElementById("doctors").value, 10);
@@ -26,26 +27,29 @@ function calculatePrices() {
 
   if (isNaN(rooms) || isNaN(doctors)) return;
 
-  // Canone base mensile
-  let canone = 100 + rooms * 10 + doctors * 5;
-  if (bundle === "plus") canone += 50;
-  if (bundle === "vip") canone += 100;
+  // Base canone mensile per bundle
+  let canone = 0;
+  if (bundle === "starter") canone = 100;
+  if (bundle === "plus") canone = 150;
+  if (bundle === "vip") canone = 200;
+
+  // Aggiunte per ambulatori e medici
+  canone += rooms * 10 + doctors * 5;
+
+  // CRM aggiuntivo
   if (crm) canone += 75;
 
-  // Setup una tantum
+  // Setup base + optional
   let setup = 299;
   if (tablet) setup += 429;
   if (tessera) setup += 79;
 
-  // Totale
-  const totaleUnaTantum = setup;
-
-  // Mostra risultati a listino
+  // Mostra i prezzi a listino
   monthlyListPrice.textContent = canone.toFixed(2) + " €";
   setupListPrice.textContent = setup.toFixed(2) + " €";
-  setupTotal.textContent = totaleUnaTantum.toFixed(2) + " €";
+  setupTotal.textContent = setup.toFixed(2) + " €";
 
-  // Scorri fino al pannello
+  // Mostra il pannello listino
   listinoPanel.classList.remove("hidden");
   loadingPanel.classList.add("hidden");
   dettaglioPanel.classList.add("hidden");
@@ -55,7 +59,7 @@ function calculatePrices() {
   }, 200);
 }
 
-// Countdown 15s
+// === Countdown 15 secondi ===
 function startCountdown() {
   const countdown = document.getElementById("countdown");
   let seconds = 15;
@@ -71,12 +75,12 @@ function startCountdown() {
   }, 1000);
 }
 
-// Barra di caricamento 0 → 100% in 15s
+// === Barra di caricamento ===
 function startProgressBar() {
   const bar = document.getElementById("progressBar");
   let width = 0;
   const interval = setInterval(() => {
-    width += 100 / 150;
+    width += 100 / 150; // 150 step in 15 secondi
     if (width >= 100) {
       width = 100;
       clearInterval(interval);
@@ -85,37 +89,40 @@ function startProgressBar() {
   }, 100);
 }
 
-// Mostra il pannello con l'offerta riservata
+// === Mostra offerta riservata ===
 function showPromoPanel() {
   loadingPanel.classList.add("hidden");
   dettaglioPanel.classList.remove("hidden");
-  dettaglioPanel.scrollIntoView({ behavior: "smooth" });
 
-  // Applica sconto fittizio
+  // Leggi i prezzi listino
   const prezzoListino = parseFloat(monthlyListPrice.textContent);
   const setupListino = parseFloat(setupListPrice.textContent);
 
-  const prezzoPromo = (prezzoListino * 0.85).toFixed(2);
-  const setupPromo = (setupListino * 0.7).toFixed(2);
+  // Calcola sconti
+  const prezzoPromo = (prezzoListino * 0.85).toFixed(2); // -15%
+  const setupPromo = (setupListino * 0.7).toFixed(2);     // -30%
 
+  // Mostra offerta
   defaultMonthlyPrice.textContent = prezzoPromo + " €";
   listMonthlyCrossed.textContent = prezzoListino.toFixed(2) + " €";
   setupFee.textContent = setupPromo + " €";
   listSetupCrossed.textContent = setupListino.toFixed(2) + " €";
+
+  dettaglioPanel.scrollIntoView({ behavior: "smooth" });
 }
 
-// Event listeners
+// === Eventi ===
 calculateBtn.addEventListener("click", calculatePrices);
 
 checkBtn.addEventListener("click", () => {
-  loadingPanel.classList.remove("hidden");
   listinoPanel.classList.add("hidden");
+  loadingPanel.classList.remove("hidden");
   dettaglioPanel.classList.add("hidden");
 
   startCountdown();
   startProgressBar();
 
   setTimeout(() => {
-    dettaglioPanel.scrollIntoView({ behavior: "smooth" });
+    loadingPanel.scrollIntoView({ behavior: "smooth" });
   }, 300);
 });
