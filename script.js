@@ -16,7 +16,10 @@ const listMonthlyCrossed = document.getElementById("list-monthly-crossed");
 const setupFee = document.getElementById("setup-fee");
 const listSetupCrossed = document.getElementById("list-setup-crossed");
 
-let prezzoListino = 0;
+// === Variabili globali ===
+let canoneReale = 0;
+let setupReale = 0;
+let canoneListino = 0;
 let setupListino = 0;
 
 // === Calcolo prezzi ===
@@ -30,33 +33,28 @@ function calculatePrices() {
 
   if (isNaN(rooms) || isNaN(doctors)) return;
 
-  // Base canone mensile per bundle
-  let canone = 0;
-  if (bundle === "starter") canone = 100;
-  if (bundle === "plus") canone = 150;
-  if (bundle === "vip") canone = 200;
+  // === Prezzo reale ===
+  if (bundle === "starter") canoneReale = 100;
+  if (bundle === "plus") canoneReale = 150;
+  if (bundle === "vip") canoneReale = 200;
 
-  // Aggiunte per ambulatori e medici
-  canone += rooms * 10 + doctors * 5;
+  canoneReale += rooms * 10 + doctors * 5;
+  if (crm) canoneReale += 75;
 
-  // CRM aggiuntivo
-  if (crm) canone += 75;
+  setupReale = 299;
+  if (tablet) setupReale += 429;
+  if (tessera) setupReale += 79;
 
-  // Setup base + optional
-  let setup = 299;
-  if (tablet) setup += 429;
-  if (tessera) setup += 79;
+  // === Prezzo maggiorato a listino (+25%)
+  canoneListino = canoneReale * 1.25;
+  setupListino = setupReale * 1.25;
 
-  // Salva i valori numerici per l'offerta riservata
-  prezzoListino = canone;
-  setupListino = setup;
+  // === Mostra prezzi a listino
+  monthlyListPrice.textContent = canoneListino.toFixed(2) + " €";
+  setupListPrice.textContent = setupListino.toFixed(2) + " €";
+  setupTotal.textContent = setupListino.toFixed(2) + " €";
 
-  // Mostra i prezzi a listino
-  monthlyListPrice.textContent = canone.toFixed(2) + " €";
-  setupListPrice.textContent = setup.toFixed(2) + " €";
-  setupTotal.textContent = setup.toFixed(2) + " €";
-
-  // Mostra il pannello listino
+  // === Mostra pannello
   listinoPanel.classList.remove("hidden");
   loadingPanel.classList.add("hidden");
   dettaglioPanel.classList.add("hidden");
@@ -66,7 +64,7 @@ function calculatePrices() {
   }, 200);
 }
 
-// === Countdown 15 secondi ===
+// === Countdown 15s ===
 function startCountdown() {
   const countdown = document.getElementById("countdown");
   let seconds = 15;
@@ -87,7 +85,7 @@ function startProgressBar() {
   const bar = document.getElementById("progressBar");
   let width = 0;
   const interval = setInterval(() => {
-    width += 100 / 150; // 150 step in 15 secondi
+    width += 100 / 150;
     if (width >= 100) {
       width = 100;
       clearInterval(interval);
@@ -101,13 +99,11 @@ function showPromoPanel() {
   loadingPanel.classList.add("hidden");
   dettaglioPanel.classList.remove("hidden");
 
-  // Calcola sconti
-  const prezzoPromo = (prezzoListino * 0.85).toFixed(2); // -15%
-  const setupPromo = (setupListino * 0.7).toFixed(2);     // -30%
+  const prezzoPromo = canoneReale.toFixed(2); // prezzo reale
+  const setupPromo = setupReale.toFixed(2);   // prezzo reale
 
-  // Mostra offerta
   defaultMonthlyPrice.textContent = prezzoPromo + " €";
-  listMonthlyCrossed.textContent = prezzoListino.toFixed(2) + " €";
+  listMonthlyCrossed.textContent = canoneListino.toFixed(2) + " €";
   setupFee.textContent = setupPromo + " €";
   listSetupCrossed.textContent = setupListino.toFixed(2) + " €";
 
@@ -122,6 +118,7 @@ calculateBtn.addEventListener("click", calculatePrices);
 checkBtn.addEventListener("click", () => {
   loadingPanel.classList.remove("hidden");
   dettaglioPanel.classList.add("hidden");
+
   startCountdown();
   startProgressBar();
 
