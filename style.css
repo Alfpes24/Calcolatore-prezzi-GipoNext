@@ -217,7 +217,7 @@ select:focus {
   display: none !important;
 }
 
-/* ✅ ECG migliorato: linea spessa, visibile, piena larghezza, no riquadro */
+/* ✅ ECG migliorato: sottile, visibile, larghezza piena */
 .ecg-container {
   width: 100%;
   height: 60px;
@@ -243,7 +243,7 @@ select:focus {
 
 .ecg-wave polyline {
   stroke: #009c66;
-  stroke-width: 4;
+  stroke-width: 2.5;
   fill: none;
 }
 
