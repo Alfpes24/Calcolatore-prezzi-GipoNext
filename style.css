@@ -26,7 +26,6 @@ body {
   padding: 24px;
 }
 
-/* Layout a due colonne fisse */
 .layout-container {
   display: flex;
   flex-wrap: nowrap;
@@ -38,29 +37,19 @@ body {
 }
 
 .presentation {
-  flex: 0 0 50%;
-  max-width: 50%;
+  flex: 0 0 30%;
+  max-width: 30%;
   overflow: hidden;
 }
 
 .form-box {
-  flex: 0 0 50%;
-  max-width: 50%;
+  flex: 0 0 70%;
+  max-width: 70%;
   background: white;
   padding: 24px;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
-}
-
-/* Presentazione */
-.presentation img,
-.presentation iframe,
-.presentation div {
-  max-width: 100%;
-  height: auto;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
 }
 
 .logo {
@@ -104,7 +93,6 @@ body {
   font-size: 14px;
 }
 
-/* Form */
 .form-box h2 {
   font-size: 18px;
   margin-bottom: 20px;
@@ -147,7 +135,6 @@ select:focus {
   height: 16px;
 }
 
-/* Pulsanti */
 .btn-primary,
 .btn-outline {
   display: block;
@@ -184,7 +171,6 @@ select:focus {
   color: white;
 }
 
-/* Card pannelli */
 .card {
   background: white;
   border-radius: var(--radius);
@@ -231,22 +217,22 @@ select:focus {
   display: none !important;
 }
 
-/* ✅ ECG realistico */
+/* ✅ ECG realistico animato */
 .ecg-container {
   width: 100%;
   max-width: 500px;
   height: 60px;
   margin: 20px auto;
   overflow: hidden;
-  background: white;
   border: 1px solid var(--border);
   border-radius: var(--radius);
+  background: white;
   position: relative;
 }
 
 .ecg-wave-wrapper {
   display: flex;
-  width: 240%; /* 2x la larghezza dell’onda */
+  width: 240%;
   animation: ecg-slide 2.5s linear infinite;
 }
 
@@ -256,14 +242,14 @@ select:focus {
 }
 
 .ecg-wave polyline {
-  fill: none;
   stroke: var(--primary);
   stroke-width: 2;
+  fill: none;
 }
 
 @keyframes ecg-slide {
   0% {
-    transform: translateX(0%);
+    transform: translateX(0);
   }
   100% {
     transform: translateX(-50%);
