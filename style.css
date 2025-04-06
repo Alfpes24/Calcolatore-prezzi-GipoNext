@@ -26,11 +26,10 @@ body {
   padding: 24px;
 }
 
+/* === Layout principale === */
 .layout-container {
   display: flex;
-  flex-wrap: nowrap;
   justify-content: space-between;
-  align-items: flex-start;
   gap: 40px;
   max-width: 1200px;
   margin: 0 auto 40px auto;
@@ -51,6 +50,20 @@ body {
   border: 1px solid var(--border);
 }
 
+/* === Responsive mobile === */
+@media (max-width: 768px) {
+  .layout-container {
+    flex-direction: column;
+  }
+
+  .presentation,
+  .form-box {
+    max-width: 100%;
+    flex: 0 0 100%;
+  }
+}
+
+/* === Presentazione === */
 .logo {
   width: 160px;
   margin-bottom: 20px;
@@ -92,6 +105,7 @@ body {
   font-size: 14px;
 }
 
+/* === Form preventivo === */
 .form-box h2 {
   font-size: 18px;
   margin-bottom: 20px;
@@ -134,6 +148,7 @@ select:focus {
   height: 16px;
 }
 
+/* === Pulsanti === */
 .btn-primary,
 .btn-outline {
   display: block;
@@ -170,6 +185,11 @@ select:focus {
   color: white;
 }
 
+.full {
+  width: 100%;
+}
+
+/* === Pannelli === */
 .card {
   background: white;
   border-radius: var(--radius);
@@ -216,7 +236,7 @@ select:focus {
   display: none !important;
 }
 
-/* ✅ Barra di caricamento orizzontale */
+/* === Barra di caricamento === */
 .progress-container {
   width: 100%;
   height: 14px;
@@ -233,6 +253,7 @@ select:focus {
   transition: width 0.2s linear;
 }
 
+/* === Testo caricamento === */
 .verifica-msg {
   font-size: 16px;
   text-align: center;
