@@ -27,7 +27,6 @@ const prezzi = {
 const setup = [99, 119, 129, 149, 199, 299, 499, 899];
 const soglie = [1, 2, 4, 6, 8, 10, 15, 20];
 
-// ✅ Trova l’indice corretto in base alle soglie
 function getIndiceStanze(stanze) {
   for (let i = 0; i < soglie.length; i++) {
     if (stanze <= soglie[i]) return i;
@@ -35,13 +34,13 @@ function getIndiceStanze(stanze) {
   return soglie.length - 1;
 }
 
-// ✅ Al caricamento
+// ✅ Eventi
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("calculate-btn").addEventListener("click", calcolaPreventivo);
   document.getElementById("check-btn").addEventListener("click", avviaVerifica);
 });
 
-// ✅ Calcolo del preventivo
+// ✅ Calcolo preventivo
 function calcolaPreventivo() {
   const stanze = Math.floor(parseFloat(document.getElementById("rooms").value));
   const medici = Math.floor(parseFloat(document.getElementById("doctors").value));
@@ -65,7 +64,6 @@ function calcolaPreventivo() {
   const canoneReale = prezzoUnitario * stanze;
   const setupReale = setup[idx];
 
-  // Valori con maggiorazione
   const listinoMensile = canoneReale * 1.25;
   const listinoSetup = setupReale * 1.25;
 
@@ -75,12 +73,12 @@ function calcolaPreventivo() {
   const totaleSetupListino = listinoSetup + tabletPrezzo + lettorePrezzo;
   const totaleSetupReale = setupReale + tabletPrezzo + lettorePrezzo;
 
-  // Inserimento valori nel DOM
+  // Mostra listino
   document.getElementById("monthly-list-price").textContent = `${listinoMensile.toFixed(2)} €`;
   document.getElementById("setup-list-price").textContent = `${listinoSetup.toFixed(2)} €`;
   document.getElementById("setup-total").textContent = `${totaleSetupListino.toFixed(2)} €`;
 
-  // Salva per dopo
+  // Salva per uso successivo
   window._canoneReale = canoneReale;
   window._setupReale = setupReale;
   window._totaleReale = totaleSetupReale;
@@ -94,7 +92,7 @@ function calcolaPreventivo() {
   document.getElementById("listino-panel").scrollIntoView({ behavior: "smooth" });
 }
 
-// ✅ Avvia countdown e barra
+// ✅ Verifica condizioni riservate
 function avviaVerifica() {
   const spinner = document.getElementById("loading-spinner");
   const countdown = document.getElementById("countdown");
@@ -102,6 +100,9 @@ function avviaVerifica() {
 
   spinner.classList.remove("hidden");
   document.getElementById("dettaglio-panel").classList.add("hidden");
+
+  // Scroll al pannello
+  spinner.scrollIntoView({ behavior: "smooth" });
 
   // Reset barra
   bar.style.width = "0%";
@@ -127,7 +128,7 @@ function avviaVerifica() {
   }, 1000);
 }
 
-// ✅ Mostra offerta riservata
+// ✅ Offerta riservata
 function mostraOffertaRiservata() {
   const realeCanone = window._canoneReale;
   const realeSetup = window._setupReale;
@@ -144,7 +145,7 @@ function mostraOffertaRiservata() {
   document.getElementById("dettaglio-panel").scrollIntoView({ behavior: "smooth" });
 }
 
-// ✅ Errore visivo
+// ✅ Messaggio di errore
 function mostraErrore(msg) {
   const div = document.createElement("div");
   div.style.color = "red";
