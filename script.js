@@ -1,7 +1,7 @@
 // ✅ Protezione accesso
 (function protezioneAccesso() {
   const refOk = document.referrer.includes("alfpes24.github.io") || window.opener;
-  const accessoConsentito = localStorage.getItem("accessoGipo") === "ok";
+  const accessoConsentito = localStorage.getItem("accesso_consentito") === "ok";
   if (!accessoConsentito || !refOk) {
     document.body.innerHTML = "<h2 style='color: red; text-align: center;'>Accesso non autorizzato</h2>";
     setTimeout(() => location.replace("https://alfpes24.github.io/"), 1500);
