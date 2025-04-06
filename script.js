@@ -1,128 +1,157 @@
-// === Selettori ===
-const form = document.getElementById("calculator-form");
-const calculateBtn = document.getElementById("calculate-btn");
-const checkBtn = document.getElementById("check-btn");
+// ✅ Protezione accesso
+(function protezioneAccesso() {
+  const refOk = document.referrer.includes("alfpes24.github.io") || window.opener;
+  const accessoConsentito = localStorage.getItem("accessoGipo") === "ok";
+  if (!accessoConsentito || !refOk) {
+    document.body.innerHTML = "<h2 style='color: red; text-align: center;'>Accesso non autorizzato</h2>";
+    setTimeout(() => location.replace("https://alfpes24.github.io/"), 1500);
+  }
+})();
 
-const listinoPanel = document.getElementById("listino-panel");
-const loadingPanel = document.getElementById("loading-spinner");
-const dettaglioPanel = document.getElementById("dettaglio-panel");
+// ✅ Configurazione prezzi
+const prezzi = {
+  starter: {
+    solo: [109, 99, 89, 69, 59, 49, 29, 19],
+    crm:  [119, 109, 99, 79, 69, 59, 39, 29]
+  },
+  plus: {
+    solo: [129, 119, 109, 89, 69, 59, 49, 39],
+    crm:  [139, 129, 119, 99, 79, 69, 59, 49]
+  },
+  vip: {
+    solo: [139, 129, 119, 99, 79, 69, 59, 49],
+    crm:  [149, 139, 129, 109, 89, 79, 69, 59]
+  }
+};
 
-const monthlyListPrice = document.getElementById("monthly-list-price");
-const setupListPrice = document.getElementById("setup-list-price");
-const setupTotal = document.getElementById("setup-total");
+const setup = [99, 119, 129, 149, 199, 299, 499, 899];
+const soglie = [1, 2, 4, 6, 8, 10, 15, 20];
 
-const defaultMonthlyPrice = document.getElementById("default-monthly-price");
-const listMonthlyCrossed = document.getElementById("list-monthly-crossed");
-const setupFee = document.getElementById("setup-fee");
-const listSetupCrossed = document.getElementById("list-setup-crossed");
-
-// === Variabili globali ===
-let canoneReale = 0;
-let setupReale = 0;
-let canoneListino = 0;
-let setupListino = 0;
-
-// === Calcolo prezzi ===
-function calculatePrices() {
-  const rooms = parseInt(document.getElementById("rooms").value, 10);
-  const doctors = parseInt(document.getElementById("doctors").value, 10);
-  const bundle = document.getElementById("bundle").value;
-  const crm = document.getElementById("crm").checked;
-  const tablet = document.getElementById("tabletFirma").checked;
-  const tessera = document.getElementById("lettoreTessera").checked;
-
-  if (isNaN(rooms) || isNaN(doctors)) return;
-
-  // === Prezzo reale ===
-  if (bundle === "starter") canoneReale = 100;
-  if (bundle === "plus") canoneReale = 150;
-  if (bundle === "vip") canoneReale = 200;
-
-  canoneReale += rooms * 10 + doctors * 5;
-  if (crm) canoneReale += 75;
-
-  setupReale = 299;
-  if (tablet) setupReale += 429;
-  if (tessera) setupReale += 79;
-
-  // === Prezzo maggiorato a listino (+25%)
-  canoneListino = canoneReale * 1.25;
-  setupListino = setupReale * 1.25;
-
-  // === Mostra prezzi a listino
-  monthlyListPrice.textContent = canoneListino.toFixed(2) + " €";
-  setupListPrice.textContent = setupListino.toFixed(2) + " €";
-  setupTotal.textContent = setupListino.toFixed(2) + " €";
-
-  // === Mostra pannello
-  listinoPanel.classList.remove("hidden");
-  loadingPanel.classList.add("hidden");
-  dettaglioPanel.classList.add("hidden");
-
-  setTimeout(() => {
-    listinoPanel.scrollIntoView({ behavior: "smooth" });
-  }, 200);
+// ✅ Trova l’indice corretto in base alle soglie
+function getIndiceStanze(stanze) {
+  for (let i = 0; i < soglie.length; i++) {
+    if (stanze <= soglie[i]) return i;
+  }
+  return soglie.length - 1;
 }
 
-// === Countdown 15s ===
-function startCountdown() {
-  const countdown = document.getElementById("countdown");
-  let seconds = 15;
-  countdown.textContent = `Attendere ${seconds} secondi…`;
+// ✅ Al caricamento
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("calculate-btn").addEventListener("click", calcolaPreventivo);
+  document.getElementById("check-btn").addEventListener("click", avviaVerifica);
+});
 
-  const timer = setInterval(() => {
+// ✅ Calcolo del preventivo
+function calcolaPreventivo() {
+  const stanze = Math.floor(parseFloat(document.getElementById("rooms").value));
+  const medici = Math.floor(parseFloat(document.getElementById("doctors").value));
+  const bundle = document.getElementById("bundle").value || "plus";
+  const crm = document.getElementById("crm").checked;
+  const tablet = document.getElementById("tabletFirma").checked;
+  const lettore = document.getElementById("lettoreTessera").checked;
+
+  if (isNaN(stanze) || isNaN(medici) || stanze <= 0 || medici <= 0) {
+    mostraErrore("Inserisci un numero valido di ambulatori e medici.");
+    return;
+  }
+
+  const idx = getIndiceStanze(stanze);
+  let prezzoUnitario = prezzi[bundle][crm ? "crm" : "solo"][idx];
+
+  if ((medici / stanze) <= 1.3) {
+    prezzoUnitario = prezzoUnitario / 1.5;
+  }
+
+  const canoneReale = prezzoUnitario * stanze;
+  const setupReale = setup[idx];
+
+  // Valori con maggiorazione
+  const listinoMensile = canoneReale * 1.25;
+  const listinoSetup = setupReale * 1.25;
+
+  const tabletPrezzo = tablet ? 429 : 0;
+  const lettorePrezzo = lettore ? 79 : 0;
+
+  const totaleSetupListino = listinoSetup + tabletPrezzo + lettorePrezzo;
+  const totaleSetupReale = setupReale + tabletPrezzo + lettorePrezzo;
+
+  // Inserimento valori nel DOM
+  document.getElementById("monthly-list-price").textContent = `${listinoMensile.toFixed(2)} €`;
+  document.getElementById("setup-list-price").textContent = `${listinoSetup.toFixed(2)} €`;
+  document.getElementById("setup-total").textContent = `${totaleSetupListino.toFixed(2)} €`;
+
+  // Salva per dopo
+  window._canoneReale = canoneReale;
+  window._setupReale = setupReale;
+  window._totaleReale = totaleSetupReale;
+  window._listinoMensile = listinoMensile;
+  window._listinoSetup = listinoSetup;
+
+  document.getElementById("listino-panel").classList.remove("hidden");
+  document.getElementById("loading-spinner").classList.add("hidden");
+  document.getElementById("dettaglio-panel").classList.add("hidden");
+
+  document.getElementById("listino-panel").scrollIntoView({ behavior: "smooth" });
+}
+
+// ✅ Avvia countdown e barra
+function avviaVerifica() {
+  const spinner = document.getElementById("loading-spinner");
+  const countdown = document.getElementById("countdown");
+  const bar = document.getElementById("progressBar");
+
+  spinner.classList.remove("hidden");
+  document.getElementById("dettaglio-panel").classList.add("hidden");
+
+  // Reset barra
+  bar.style.width = "0%";
+  let percent = 0;
+  const barInterval = setInterval(() => {
+    percent += 100 / 150;
+    bar.style.width = `${percent}%`;
+    if (percent >= 100) clearInterval(barInterval);
+  }, 100);
+
+  // Countdown
+  let seconds = 15;
+  countdown.textContent = `Attendere ${seconds} secondi...`;
+  const interval = setInterval(() => {
     seconds--;
-    countdown.textContent = `Attendere ${seconds} secondi…`;
+    countdown.textContent = `Attendere ${seconds} secondi...`;
+
     if (seconds <= 0) {
-      clearInterval(timer);
-      showPromoPanel();
+      clearInterval(interval);
+      spinner.classList.add("hidden");
+      mostraOffertaRiservata();
     }
   }, 1000);
 }
 
-// === Barra di caricamento ===
-function startProgressBar() {
-  const bar = document.getElementById("progressBar");
-  let width = 0;
-  const interval = setInterval(() => {
-    width += 100 / 150;
-    if (width >= 100) {
-      width = 100;
-      clearInterval(interval);
-    }
-    bar.style.width = width + "%";
-  }, 100);
+// ✅ Mostra offerta riservata
+function mostraOffertaRiservata() {
+  const realeCanone = window._canoneReale;
+  const realeSetup = window._setupReale;
+  const listCanone = window._listinoMensile;
+  const listSetup = window._listinoSetup;
+
+  document.getElementById("default-monthly-price").textContent = `${realeCanone.toFixed(2)} €`;
+  document.getElementById("list-monthly-crossed").textContent = `${listCanone.toFixed(2)} €`;
+
+  document.getElementById("setup-fee").textContent = `${realeSetup.toFixed(2)} €`;
+  document.getElementById("list-setup-crossed").textContent = `${listSetup.toFixed(2)} €`;
+
+  document.getElementById("dettaglio-panel").classList.remove("hidden");
+  document.getElementById("dettaglio-panel").scrollIntoView({ behavior: "smooth" });
 }
 
-// === Mostra offerta riservata ===
-function showPromoPanel() {
-  loadingPanel.classList.add("hidden");
-  dettaglioPanel.classList.remove("hidden");
-
-  const prezzoPromo = canoneReale.toFixed(2); // prezzo reale
-  const setupPromo = setupReale.toFixed(2);   // prezzo reale
-
-  defaultMonthlyPrice.textContent = prezzoPromo + " €";
-  listMonthlyCrossed.textContent = canoneListino.toFixed(2) + " €";
-  setupFee.textContent = setupPromo + " €";
-  listSetupCrossed.textContent = setupListino.toFixed(2) + " €";
-
-  setTimeout(() => {
-    dettaglioPanel.scrollIntoView({ behavior: "smooth" });
-  }, 300);
+// ✅ Errore visivo
+function mostraErrore(msg) {
+  const div = document.createElement("div");
+  div.style.color = "red";
+  div.style.textAlign = "center";
+  div.style.fontWeight = "bold";
+  div.style.marginBottom = "12px";
+  div.textContent = msg;
+  document.querySelector("form").prepend(div);
+  setTimeout(() => div.remove(), 3000);
 }
-
-// === Eventi ===
-calculateBtn.addEventListener("click", calculatePrices);
-
-checkBtn.addEventListener("click", () => {
-  loadingPanel.classList.remove("hidden");
-  dettaglioPanel.classList.add("hidden");
-
-  startCountdown();
-  startProgressBar();
-
-  setTimeout(() => {
-    loadingPanel.scrollIntoView({ behavior: "smooth" });
-  }, 300);
-});
