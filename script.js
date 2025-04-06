@@ -16,6 +16,9 @@ const listMonthlyCrossed = document.getElementById("list-monthly-crossed");
 const setupFee = document.getElementById("setup-fee");
 const listSetupCrossed = document.getElementById("list-setup-crossed");
 
+let prezzoListino = 0;
+let setupListino = 0;
+
 // === Calcolo prezzi ===
 function calculatePrices() {
   const rooms = parseInt(document.getElementById("rooms").value, 10);
@@ -43,6 +46,10 @@ function calculatePrices() {
   let setup = 299;
   if (tablet) setup += 429;
   if (tessera) setup += 79;
+
+  // Salva i valori numerici per l'offerta riservata
+  prezzoListino = canone;
+  setupListino = setup;
 
   // Mostra i prezzi a listino
   monthlyListPrice.textContent = canone.toFixed(2) + " €";
@@ -94,10 +101,6 @@ function showPromoPanel() {
   loadingPanel.classList.add("hidden");
   dettaglioPanel.classList.remove("hidden");
 
-  // Leggi i prezzi listino
-  const prezzoListino = parseFloat(monthlyListPrice.textContent);
-  const setupListino = parseFloat(setupListPrice.textContent);
-
   // Calcola sconti
   const prezzoPromo = (prezzoListino * 0.85).toFixed(2); // -15%
   const setupPromo = (setupListino * 0.7).toFixed(2);     // -30%
@@ -108,17 +111,17 @@ function showPromoPanel() {
   setupFee.textContent = setupPromo + " €";
   listSetupCrossed.textContent = setupListino.toFixed(2) + " €";
 
-  dettaglioPanel.scrollIntoView({ behavior: "smooth" });
+  setTimeout(() => {
+    dettaglioPanel.scrollIntoView({ behavior: "smooth" });
+  }, 300);
 }
 
 // === Eventi ===
 calculateBtn.addEventListener("click", calculatePrices);
 
 checkBtn.addEventListener("click", () => {
-  listinoPanel.classList.add("hidden");
   loadingPanel.classList.remove("hidden");
   dettaglioPanel.classList.add("hidden");
-
   startCountdown();
   startProgressBar();
 
