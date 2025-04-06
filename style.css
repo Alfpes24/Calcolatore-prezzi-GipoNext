@@ -37,14 +37,14 @@ body {
 }
 
 .presentation {
-  flex: 0 0 50%;
-  max-width: 50%;
+  flex: 0 0 30%;
+  max-width: 30%;
   overflow: hidden;
 }
 
 .form-box {
-  flex: 0 0 50%;
-  max-width: 50%;
+  flex: 0 0 70%;
+  max-width: 70%;
   background: white;
   padding: 24px;
   border-radius: var(--radius);
@@ -217,16 +217,16 @@ select:focus {
   display: none !important;
 }
 
-/* ECG realistico e ben visibile */
+/* ✅ ECG migliorato: linea spessa, visibile, piena larghezza, no riquadro */
 .ecg-container {
   width: 100%;
-  max-width: 500px;
   height: 60px;
-  margin: 20px auto;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: black;
+  background: white;
+  border: none;
+  border-radius: 0;
   position: relative;
 }
 
@@ -242,8 +242,8 @@ select:focus {
 }
 
 .ecg-wave polyline {
-  stroke: #00cc66;
-  stroke-width: 3;
+  stroke: #009c66;
+  stroke-width: 4;
   fill: none;
 }
 
