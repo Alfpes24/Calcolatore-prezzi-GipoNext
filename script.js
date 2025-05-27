@@ -66,7 +66,7 @@ function calcolaPreventivo() {
   const setupReale = setup[idx];
 
   const listinoMensile = canoneReale * 1.25;
-  const listinoSetup = setupReale * 1.50;
+  const listinoSetup = setupReale * 2;
 
   const tabletPrezzo = tablet ? 429 : 0;
   const lettorePrezzo = lettore ? 79 : 0;
