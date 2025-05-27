@@ -24,7 +24,7 @@ const prezzi = {
   }
 };
 
-const setup = [99, 119, 129, 149, 199, 299, 499, 899];
+const setup = [500, 500, 500, 500, 750, 750, 750, 1000];
 const soglie = [1, 2, 4, 6, 8, 10, 15, 20];
 
 // 🔍 Trova indice soglia in base al numero di stanze
